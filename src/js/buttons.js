@@ -57,7 +57,7 @@ export default class Buttons {
 
     //////////////////////////////////////////////////// DEBUG
     this.debug = false;
-    this.start = 0;
+    this.start = 200;
     //////////////////////////////////////////////////// DEBUG
   }
 
@@ -114,6 +114,9 @@ export default class Buttons {
       // Disable button
       this.btnPlay.disabled = true;
 
+      // Block camera
+      this.camera.playPressed = true;
+
       this.returnScene();
     });
   }
@@ -146,19 +149,67 @@ export default class Buttons {
     this.tl.to(
       this.sky.animColors,
       {
-        value: 0,
-        duration: 20,
+        value: 1,
+        duration: 30,
       },
       "<"
     );
     this.tl.to(
-      this.sky.chnageColor,
+      this.sky.changeColor,
       {
-        value: 0.5,
-        duration: 20,
+        value: 0,
+        duration: 30,
       },
       "<"
     );
+
+    this.tl.to(
+      this.sky.mesh.position,
+      {
+        y: -8000,
+        duration: 50,
+      },
+      "<"
+    );
+    this.tl.to(
+      this.sky.mesh.scale,
+      {
+        y: 3000,
+        duration: 50,
+      },
+      "<"
+    );
+
+    this.tl.to(
+      this.moon.moon.position,
+      {
+        x: -5000,
+        y: 1000,
+        z: 10000,
+        duration: 60,
+      },
+      "<"
+    );
+
+    this.tl.to(
+      this.moon.moonMaterial.uniforms.changeColor,
+      {
+        duration: 20,
+        value: 1,
+        ease: "power2.out",
+      },
+      "<"
+    );
+    this.tl.to(
+      this.moon.moonMaterial.uniforms.wide,
+      {
+        duration: 23,
+        value: 4,
+        ease: "power2.out",
+      },
+      "<"
+    );
+
     this.tl.to(
       this.plane,
       {
@@ -174,6 +225,7 @@ export default class Buttons {
         z: -28500,
         duration: 226,
         ease: "power1.inOut",
+        onUpdate: () => {},
       },
       "<"
     );
@@ -188,15 +240,6 @@ export default class Buttons {
       "<"
     );
 
-    this.tl.to(
-      this.moon.moonMaterial.uniforms.wide,
-      {
-        duration: 23,
-        value: 4.5,
-        ease: "power2.out",
-      },
-      "<"
-    );
     this.tl.to(
       this.moon.moonMaterial.uniforms.opacity,
       {
@@ -309,6 +352,15 @@ export default class Buttons {
     );
 
     this.tl.to(
+      this.singlePoint.material.uniforms.opacity,
+      {
+        value: 0,
+        duration: 1,
+      },
+      "<"
+    );
+
+    this.tl.to(
       this.flower.particlesMaterial.uniforms.disperse,
       {
         value: 0,
@@ -349,7 +401,7 @@ export default class Buttons {
     this.tl.to(
       this.cityLights.textLight,
       {
-        duration: 140,
+        duration: 80,
         disperse: 1,
       },
       "<"

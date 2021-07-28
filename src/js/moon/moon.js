@@ -23,17 +23,23 @@ export default class Moon {
     this.addMoon();
     //  this.atmosphere.init();
 
-    this.moon.position.x = -8030;
-    this.moon.position.y = 7800;
-    this.moon.position.z = 1600;
+    this.moon.position.x = -6000;
+    this.moon.position.y = -3000;
+    this.moon.position.z = -1000;
 
     this.moon.rotation.z = -0.5;
+
+    //
+    // this.moon.position.x = -5000;
+    // this.moon.position.y = 4000;
+    // this.moon.position.z = 10000;
   }
 
   addMoon() {
-    this.debugObject.moonColor1 = "#000000";
-    this.debugObject.moonColor2 = "#ff9300";
-    this.debugObject.moonColor3 = "#820000";
+    this.debugObject.moonColor1 = "#ff4c00";
+    this.debugObject.moonColor2 = "#ff009e";
+    this.debugObject.moonColor3 = "#000";
+    this.debugObject.moonColor4 = "#fff";
     this.folderMoon.addColor(this.debugObject, "moonColor1").onChange(() => {
       this.moonMaterial.uniforms.color1.value = new THREE.Color(this.debugObject.moonColor1);
     });
@@ -43,6 +49,9 @@ export default class Moon {
     this.folderMoon.addColor(this.debugObject, "moonColor3").onChange(() => {
       this.moonMaterial.uniforms.color3.value = new THREE.Color(this.debugObject.moonColor3);
     });
+    this.folderMoon.addColor(this.debugObject, "moonColor4").onChange(() => {
+      this.moonMaterial.uniforms.color4.value = new THREE.Color(this.debugObject.moonColor4);
+    });
 
     this.geometry = new THREE.SphereGeometry(60, 70, 70);
     this.moonMaterial = new THREE.ShaderMaterial({
@@ -50,8 +59,10 @@ export default class Moon {
         color1: { value: new THREE.Color(this.debugObject.moonColor1) },
         color2: { value: new THREE.Color(this.debugObject.moonColor2) },
         color3: { value: new THREE.Color(this.debugObject.moonColor3) },
-        wide: { value: 25 },
-        opacity: { value: 0 },
+        color4: { value: new THREE.Color(this.debugObject.moonColor4) },
+        wide: { value: 2 },
+        opacity: { value: 1 },
+        changeColor: { value: 0 },
       },
       transparent: true,
       // depthWrite: false,
@@ -63,7 +74,7 @@ export default class Moon {
 
     this.moon.add(this.sphere);
 
-    this.moon.scale.set(40, 40, 40);
+    this.moon.scale.set(5, 5, 5);
 
     this.scene.add(this.moon);
   }

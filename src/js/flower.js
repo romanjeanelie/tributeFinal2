@@ -12,7 +12,7 @@ export default class Flower {
     this.gui = options.gui;
     this.debugObject = {};
     this.folderFlower = this.gui.addFolder("Flower");
-    this.folderFlower.open();
+    this.folderFlower.close();
 
     this.scene = options.scene;
 

@@ -32,6 +32,8 @@ export default class cameraPath {
 
     this.progress = 0;
 
+    this.playPressed = false;
+
     // ACTIVE CAMERA /////////////////
     this.isActive = false;
     window.camera = this.camera;
@@ -118,8 +120,6 @@ export default class cameraPath {
     this.screen = new THREE.Mesh(this.screenGeometry, this.screenMaterial);
     this.screen.position.z = -1;
 
-    // this.cameraAndScreen.add(this.screen);
-
     this.screenGeometry.center();
   }
 
@@ -136,17 +136,16 @@ export default class cameraPath {
 
   init() {
     // Camera
-    this.cameraAndScreen = new THREE.Group();
-
+    this.cameraGroup = new THREE.Group();
     this.addScreen();
 
     this.splineCamera = new THREE.PerspectiveCamera(70, this.sizes.width / this.sizes.height, 0.01, 115000);
 
     var vector = new THREE.Vector3(); // create once and reuse it!
 
-    this.cameraAndScreen.add(this.splineCamera);
+    this.cameraGroup.add(this.splineCamera);
 
-    this.scene.add(this.cameraAndScreen);
+    this.scene.add(this.cameraGroup);
 
     this.cameraHelper = new THREE.CameraHelper(this.splineCamera);
     this.scene.add(this.cameraHelper);
@@ -157,7 +156,6 @@ export default class cameraPath {
     this.folderCamera.add(this.params, "animationView").onChange(() => {
       this.isActive = !this.isActive;
       this.positionCameraLarge();
-      console.log(this.isActive);
     });
     this.folderCamera.add(this.params, "cameraHelper").onChange(() => {
       this.toggleCameraHelper();
@@ -165,7 +163,7 @@ export default class cameraPath {
     this.folderCamera.open();
   }
 
-  cameraPath(progress) {
+  cameraPath(progress, time, parallax) {
     this.looptime = 20 * 1000;
 
     // range number between 0 and 1
@@ -175,16 +173,22 @@ export default class cameraPath {
     this.pos = this.mesh.geometry.parameters.path.getPointAt(this.t);
     this.pos2 = this.mesh.geometry.parameters.path.getPointAt(this.t2);
 
-    this.cameraAndScreen.position.copy(this.pos2);
+    // if (!this.playPressed) {
+    this.cameraGroup.position.copy(this.pos2);
+    // }
+
+    this.splineCamera.position.x = parallax.eased.x;
+    this.splineCamera.position.y = parallax.eased.y;
+    // this.splineCamera.translateY(parallax.eased.y);
 
     this.cameraHelper.update();
   }
 
-  anim(progress, time) {
+  anim(progress, time, parallax) {
     // animate camera along spline
     this.camera.updateProjectionMatrix();
 
-    this.cameraPath(this.progress);
+    this.cameraPath(this.progress, time, parallax);
     if (this.isActive) {
       this.camera.lookAt(this.posCameraLarge);
     }

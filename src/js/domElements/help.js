@@ -2,6 +2,8 @@ import gsap from "gsap/gsap-core";
 
 import debounce from "../utils/debounce";
 
+import isTouchDevice from "../utils/isTouchDevice";
+
 export default class Help {
   constructor() {
     this.scroll;
@@ -20,14 +22,29 @@ export default class Help {
   }
 
   displayClick() {
-    gsap.to(".help__click .desktop", {
-      y: 0,
-      duration: 2,
-      ease: "expo.out",
-    });
+    if (isTouchDevice()) {
+      gsap.to(".help__click .mobile", {
+        y: 0,
+        duration: 2,
+        ease: "expo.out",
+      });
+    } else {
+      gsap.to(".help__click .desktop", {
+        y: 0,
+        duration: 2,
+        ease: "expo.out",
+      });
+    }
   }
 
   hideClick() {
+    if (isTouchDevice()) {
+      gsap.to(".help__click .mobile", {
+        y: "-100%",
+        duration: 2,
+        ease: "expo.out",
+      });
+    }
     gsap.to(".help__click .desktop", {
       y: "-100%",
       duration: 2,

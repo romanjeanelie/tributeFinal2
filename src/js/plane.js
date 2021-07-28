@@ -15,11 +15,18 @@ export default class Plane {
 
     this.scene = options.scene;
 
+    this.gui = options.gui;
+    this.debugObject = {};
+    this.folderPlane = this.gui.addFolder("Plane");
+    this.folderPlane.close();
+
     this.plane = new THREE.Group();
     this.textsMesh = [];
     this.materialsText = [];
     this.materialsBigLight = [];
     this.materialsLittleLight = [];
+
+    this.isActive = false;
 
     this.textOpacity = 1;
   }
@@ -33,8 +40,6 @@ export default class Plane {
       posY: 2,
       posZ: 2,
       scale: 4,
-      color: "#9AADCD",
-      color2: "#6D7B7C",
     };
     this.createText(textOptions);
 
@@ -44,7 +49,7 @@ export default class Plane {
 
     this.plane.scale.set(40, 40, 40);
     // this.plane.position.set(1200, -2100, 10600);
-    this.plane.position.set(1200, -2500, 10600);
+    this.plane.position.set(1200, -1500, 10600);
 
     this.scene.add(this.plane);
   }
@@ -64,6 +69,15 @@ export default class Plane {
   }
 
   createText(options) {
+    this.debugObject.textColor1 = "#fffa93";
+    this.debugObject.textColor2 = "#eeb400";
+
+    this.folderPlane.addColor(this.debugObject, "textColor1").onChange(() => {
+      this.textMaterial.uniforms.uColor.value = new THREE.Color(this.debugObject.textColor1);
+    });
+    this.folderPlane.addColor(this.debugObject, "textColor2").onChange(() => {
+      this.textMaterial.uniforms.uColor2.value = new THREE.Color(this.debugObject.textColor2);
+    });
     this.loader.load("/fonts/Soleil_Regular.json", (font) => {
       const textGeometry = new THREE.TextGeometry(options.text, {
         font: font,
@@ -73,15 +87,15 @@ export default class Plane {
         bevelEnabled: false,
       });
 
-      const textMaterial = new THREE.ShaderMaterial({
+      this.textMaterial = new THREE.ShaderMaterial({
         uniforms: {
           uStrength: { value: 0 },
           time: { value: 0 },
           activeLines: { value: 0 },
           progress: { value: 0 },
           opacity: { value: this.textOpacity },
-          uColor: { value: new THREE.Color(options.color) },
-          uColor2: { value: new THREE.Color(options.color2 ? options.color2 : options.color) },
+          uColor: { value: new THREE.Color(this.debugObject.textColor1) },
+          uColor2: { value: new THREE.Color(this.debugObject.textColor2) },
           squeeze: { value: 0 },
           wide: { value: 1 },
         },
@@ -91,9 +105,9 @@ export default class Plane {
         // depthWrite: false,
       });
 
-      this.materialsText.push(textMaterial);
+      this.materialsText.push(this.textMaterial);
 
-      const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+      const textMesh = new THREE.Mesh(textGeometry, this.textMaterial);
 
       textMesh.position.x = options.posX;
       textMesh.position.y = options.posY;
@@ -113,9 +127,14 @@ export default class Plane {
   }
 
   createRopes() {
-    const geometry1 = new THREE.PlaneGeometry(20, 0.2);
-    const geometry2 = new THREE.PlaneGeometry(58, 0.2);
-    const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
+    this.debugObject.ropeColor = "#000";
+
+    this.folderPlane.addColor(this.debugObject, "ropeColor").onChange(() => {
+      material.color = new THREE.Color(this.debugObject.ropeColor);
+    });
+    const geometry1 = new THREE.PlaneGeometry(20, 0.1);
+    const geometry2 = new THREE.PlaneGeometry(68, 0.1);
+    const material = new THREE.MeshBasicMaterial({ color: new THREE.Color(this.debugObject.ropeColor) });
 
     const rope1 = new THREE.Mesh(geometry1, material);
     const rope2 = new THREE.Mesh(geometry1, material);
@@ -131,10 +150,10 @@ export default class Plane {
     rope2.position.x = 20;
     rope2.position.y = 1;
 
-    longRope1.position.x = 59;
+    longRope1.position.x = 65;
     longRope1.position.y = 4;
 
-    longRope2.position.x = 59;
+    longRope2.position.x = 65;
     longRope2.position.y = 0;
 
     this.plane.add(rope1, rope2, longRope1, longRope2);
@@ -216,7 +235,9 @@ export default class Plane {
       material.uniforms.opacity.value = this.textOpacity;
     });
 
-    this.plane.position.x -= 0.5;
+    if (this.isActive) {
+      this.plane.position.x -= 0.5;
+    }
 
     this.materialsBigLight.forEach((material) => {
       material.uniforms.time.value = time;

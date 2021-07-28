@@ -37,17 +37,24 @@ export default class TextGod {
 
   init() {
     this.addText();
-  }
-
-  addText() {
-    this.debugObject.color = "#2F3438";
-    this.debugObject.color2 = "#C0D2E3";
 
     this.folderGod.addColor(this.debugObject, "color").onChange(() => {
       this.materialsText.forEach((material) => {
         material.uniforms.uColor.value = new THREE.Color(this.debugObject.color);
       });
     });
+
+    this.folderGod.addColor(this.debugObject, "color2").onChange(() => {
+      this.materialsText.forEach((material) => {
+        material.uniforms.uColor2.value = new THREE.Color(this.debugObject.color2);
+      });
+    });
+  }
+
+  addText() {
+    this.debugObject.color = "#202b6b";
+    this.debugObject.color2 = "#ff18a2";
+
     const texts = ["LIFE IS A GRAIN OF SALT IN THE EYES OF GOD", ""];
     this.loader.load("/fonts/Moniqa-ExtBold_Italic.json", (font) => {
       if (this.index > texts.length - 1) {
@@ -94,6 +101,8 @@ export default class TextGod {
         vertexShader: vertex,
         fragmentShader: fragment,
         transparent: true,
+        side: THREE.DoubleSide,
+        depthWrite: false,
       });
 
       this.materialsText.push(textMaterial);

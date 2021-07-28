@@ -6,6 +6,8 @@ import vertex from "./shaders/sky/vertex.glsl";
 
 export default class Sky {
   constructor(options) {
+    this.textureLoader = new THREE.TextureLoader(this.loadingManager);
+
     this.scene = options.scene;
     this.gui = options.gui;
     this.debugObject = {};
@@ -15,19 +17,23 @@ export default class Sky {
     this.positionZ = -7000;
 
     this.opacity = 0;
-    this.animColors = { value: 1 };
+    this.animColors = { value: 0 };
     this.changeColor = { value: 0 };
 
     this.material = null;
+
+    this.sky = new THREE.Group();
   }
 
   init() {
     this.createSky();
+    this.createClouds();
 
-    // gsap.to(this.changeColor, {
-    //   value: 1,
-    //   duration: 10,
-    // });
+    this.sky.position.x = this.positionX;
+    this.sky.position.y = this.positionY;
+    this.sky.position.z = this.positionZ;
+
+    this.scene.add(this.sky);
   }
 
   createSky() {
@@ -63,51 +69,67 @@ export default class Sky {
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 
     this.mesh.scale.set(105000, 15000, 100);
-
-    this.mesh.position.x = this.positionX;
-    this.mesh.position.y = this.positionY;
-    this.mesh.position.z = this.positionZ;
-
     this.mesh.rotation.z = Math.PI;
 
-    this.scene.add(this.mesh);
+    //
+    // this.mesh.position.y = -8000;
+    // this.mesh.scale.y = 5000;
+    //
+
+    this.sky.add(this.mesh);
   }
 
   setColors() {
-    this.debugObject.color1 = "#4d2702";
+    this.debugObject.color1 = "#c5590c";
     this.gui
       .addColor(this.debugObject, "color1")
       .onChange(() => (this.material.uniforms.color1.value = new THREE.Color(this.debugObject.color1)))
       .name("skyColor1");
 
-    this.debugObject.color2 = "#450800";
+    this.debugObject.color2 = "#ed0000";
     this.gui
       .addColor(this.debugObject, "color2")
       .onChange(() => (this.material.uniforms.color2.value = new THREE.Color(this.debugObject.color2)))
       .name("skyColor2");
 
-    this.debugObject.color3 = "#101016";
+    this.debugObject.color3 = "#566679";
     this.gui
       .addColor(this.debugObject, "color3")
       .onChange(() => (this.material.uniforms.color3.value = new THREE.Color(this.debugObject.color3)))
       .name("skyColor3");
-    this.debugObject.color1a = "#532e02";
+    this.debugObject.color1a = "#a22b0a";
     this.gui
       .addColor(this.debugObject, "color1a")
       .onChange(() => (this.material.uniforms.color1a.value = new THREE.Color(this.debugObject.color1a)))
       .name("skyColor1a");
 
-    this.debugObject.color2a = "#100b0b";
+    this.debugObject.color2a = "#1c1c1c";
     this.gui
       .addColor(this.debugObject, "color2a")
       .onChange(() => (this.material.uniforms.color2a.value = new THREE.Color(this.debugObject.color2a)))
       .name("skyColor2a");
 
-    this.debugObject.color3a = "#161616";
+    this.debugObject.color3a = "#a88c6a";
     this.gui
       .addColor(this.debugObject, "color3a")
       .onChange(() => (this.material.uniforms.color3a.value = new THREE.Color(this.debugObject.color3a)))
       .name("skyColor3a");
+  }
+
+  createClouds() {
+    const mapTexture1 = this.textureLoader.load("/img/cloud.png");
+    const geometry = new THREE.PlaneBufferGeometry(1, 1);
+    const material1 = new THREE.MeshBasicMaterial({ map: mapTexture1, transparent: true });
+
+    const cloud1 = new THREE.Mesh(geometry, material1);
+
+    cloud1.position.x = -5000;
+    cloud1.position.y = -10000;
+    cloud1.position.z = 5000;
+
+    cloud1.scale.set(2000, 2000, 2000);
+
+    // this.sky.add(cloud1);
   }
 
   anim(time, progress) {

@@ -8,7 +8,7 @@ export default class Planet {
     this.gui = options.gui;
     this.debugObject = {};
     this.folderPlanet = this.gui.addFolder("Planet");
-    this.folderPlanet.open();
+    this.folderPlanet.close();
 
     this.scene = options.scene;
     this.planet = new THREE.Group();

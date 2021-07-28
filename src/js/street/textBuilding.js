@@ -1,10 +1,7 @@
 import * as THREE from "three";
-import StructureText from "./structureText";
 
 import vertex from "../shaders/buildings/text/vertex";
 import fragment from "../shaders/buildings/text/fragment";
-
-import TextDance from "./textDance";
 
 export default class TextBuilding {
   constructor(options) {
@@ -23,19 +20,18 @@ export default class TextBuilding {
   }
 
   init() {
-    this.textDance = new TextDance({
-      text: "DANCE",
-      font: "Gala2",
-      posX: -59,
-      posY: 22,
-      posZ: 15,
-      rotateY: 0,
-      scale: 6,
-      color1: "#E8E77F",
-      color2: "#CD6F3C",
-      scene: this.scene,
-    });
     this.texts = [
+      {
+        text: "DANCE",
+        font: "Gala2",
+        posX: -59,
+        posY: 22,
+        posZ: 15,
+        rotateY: 0,
+        scale: 6,
+        color1: "#E8E77F",
+        color2: "#CD6F3C",
+      },
       {
         text: "WITH ME",
         font: "Gala2",

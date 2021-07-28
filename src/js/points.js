@@ -24,13 +24,13 @@ export default class Points {
     this.createPointsMaterials();
     this.addPoints({
       minX: 0,
-      maxX: 13300,
+      maxX: 30300,
       minY: -700,
       maxY: 9000,
       minZ: -500,
       maxZ: 550,
       material: this.pointsMaterial,
-      qty: 1900,
+      qty: 4000,
       size: 20000,
     });
   }

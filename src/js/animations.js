@@ -22,9 +22,9 @@ import Help from "./domElements/help";
 
 export default class Animations {
   constructor(options) {
-    let start = 0;
-    this.time = start;
-    this.timeText = start;
+    this.time = 0;
+    this.timeText = 0;
+    this.lastElapsedTime = 0;
 
     this.scene = options.scene;
     this.finalScene = options.finalScene;
@@ -39,6 +39,12 @@ export default class Animations {
     this.intersects = null;
 
     this.scrollValue = 0;
+    this.mouse = { x: 0, y: 0 };
+    this.parallax = {
+      target: { x: 0, y: 0 },
+      eased: { x: 0, y: 0, multiplier: 4 },
+      multiplier: 3,
+    };
 
     this.steps = [1.4];
     this.delta = 0;
@@ -48,7 +54,7 @@ export default class Animations {
 
     // DEBUG MODE /////////////////////////////////////////////////////////////////////////////////
     this.backstage = false;
-    this.positionTimeline = 0.75;
+    this.positionTimeline = 1;
     this.start = 0;
     // DEBUG MODE /////////////////////////////////////////////////////////////////////////////////
 
@@ -90,6 +96,7 @@ export default class Animations {
     this.addObject();
     this.createTimelines();
     this.getScroll();
+    this.getMouse();
     this.anim();
     this.render();
 
@@ -97,6 +104,24 @@ export default class Animations {
       document.querySelector(".home").style.display = "none";
       document.querySelector(".help").style.display = "none";
     }
+  }
+  getScroll() {
+    window.addEventListener("scroll", (e) => {
+      this.scrollValue = window.scrollY / document.body.scrollHeight;
+    });
+  }
+
+  getMouse() {
+    window.addEventListener("mousemove", (event) => {
+      this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      this.getParallax();
+    });
+  }
+
+  getParallax() {
+    this.parallax.target.x = this.mouse.x * this.parallax.multiplier;
+    this.parallax.target.y = -this.mouse.y * this.parallax.multiplier;
   }
 
   displayHome() {
@@ -297,7 +322,7 @@ export default class Animations {
 
     this.singlePoint = new SinglePoint({
       scene: this.finalScene,
-      positionCamera: this.createPath.cameraPath.cameraAndScreen.position,
+      positionCamera: this.createPath.cameraPath.cameraGroup.position,
       sizes: this.sizes,
       gui: this.gui,
     });
@@ -373,13 +398,6 @@ export default class Animations {
     });
   }
 
-  getScroll() {
-    window.addEventListener("scroll", (e) => {
-      this.scrollValue = (window.scrollY + window.innerHeight) / document.body.scrollHeight;
-      console.log(this.progress);
-    });
-  }
-
   anim() {
     this.tl2.play();
 
@@ -445,10 +463,10 @@ export default class Animations {
   }
 
   stepFour() {
-    const camera = this.createPath.cameraPath.cameraAndScreen;
+    const camera = this.createPath.cameraPath.splineCamera;
 
     // Help
-    const scrollActive = false;
+    let scrollActive = false;
     setTimeout(() => {
       if (scrollActive === false) {
         this.help.displayScroll1();
@@ -460,6 +478,7 @@ export default class Animations {
     window.addEventListener(
       "scroll",
       debounce(() => {
+        scrollActive = true;
         this.help.displayScroll2();
       }, 1500)
     );
@@ -495,6 +514,7 @@ export default class Animations {
 
     const tlSky = gsap.timeline({ paused: true });
     const road = this.road;
+    const plane = this.plane;
 
     tlSky.to(this.sky, {
       opacity: 1,
@@ -515,7 +535,9 @@ export default class Animations {
             road.stadium.stadium.clear();
             road.bridge.bridge.clear();
             road.buildingsGroup.clear();
+            plane.isActive = true;
           }
+          console.log(this.progress());
         },
         onComplete: () => {
           if (this.backstage) {
@@ -545,12 +567,12 @@ export default class Animations {
   }
 
   finalStep() {
-    const camera = this.createPath.cameraPath.cameraAndScreen;
+    const camera = this.createPath.cameraPath.splineCamera;
   }
 
-  animCamera(progress, time) {
+  animCamera(progress, time, parallax) {
     this.createPath.anim();
-    this.createPath.cameraPath.anim(progress, time);
+    this.createPath.cameraPath.anim(progress, time, parallax);
   }
 
   animObjects(progress, time) {
@@ -577,22 +599,30 @@ export default class Animations {
     this.time += 0.0001 * speedFactor;
     this.progress = this.scrollValue * 1.1;
 
-    // Animation objects
-    this.animObjects(this.progress, this.time);
-    this.animText(this.progress, this.time);
-    this.animCamera(this.progress, this.time);
+    const deltaTime = this.time - this.lastElapsedTime;
+    this.lastElapsedTime = this.time;
+
+    // Parallax
+    this.parallax.eased.x +=
+      (this.parallax.target.x - this.parallax.eased.x) * deltaTime * this.parallax.eased.multiplier;
+    this.parallax.eased.y +=
+      (this.parallax.target.y - this.parallax.eased.y) * deltaTime * this.parallax.eased.multiplier;
 
     ///////////////////////////////////////// Test without scrollBar
     if (this.backstage) {
       this.progress = this.positionTimeline;
       document.body.classList.remove("scroll");
       document.querySelector(".home").style.opacity = 0;
-      //this.gui.show();
       this.singlePoint.points.pointsMaterial.uniforms.opacity.value = 1;
       this.tl2.play();
-      this.singlePoint.mesh.position.y = this.createPath.cameraPath.cameraAndScreen.position.y;
+      this.singlePoint.mesh.position.y = this.createPath.cameraPath.splineCamera.position.y;
       this.sky.opacity = 1;
     }
     ///////////////////////////////////////// End Test without scrollBar
+
+    // Animation objects
+    this.animCamera(this.progress, this.time, this.parallax);
+    this.animObjects(this.progress, this.time);
+    this.animText(this.progress, this.time);
   }
 }
