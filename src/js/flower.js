@@ -49,8 +49,8 @@ export default class Flower {
       /*------------------------------
       Particles Material
       ------------------------------*/
-      this.debugObject.color1 = "#6582e2";
-      this.debugObject.color2 = "#854a1e";
+      this.debugObject.color1 = "#3f0909";
+      this.debugObject.color2 = "#5b624e";
       this.folderFlower.addColor(this.debugObject, "color1").onChange(() => {
         this.particlesMaterial.uniforms.color1.value = new THREE.Color(this.debugObject.color1);
       });

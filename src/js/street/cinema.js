@@ -7,7 +7,6 @@ export default class Cinema {
 
     this.loadingManager = options.loadingManager;
     this.gltfLoader = new GLTFLoader(this.loadingManager);
-    this.textureLoader = new THREE.TextureLoader(this.loadingManager);
 
     this.cinema = new THREE.Group();
   }
@@ -33,16 +32,6 @@ export default class Cinema {
   }
 
   addCinema() {
-    const material = new THREE.MeshBasicMaterial({
-      color: 0xff0000,
-      side: THREE.DoubleSide,
-    });
-
-    const bakedTexture = this.textureLoader.load("/img/baked2.jpg");
-    bakedTexture.flipY = false;
-    bakedTexture.encoding = THREE.sRGBEncoding;
-    const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture });
-
     this.gltfLoader.load("/models/cinema.glb", (gltf) => {
       gltf.scene.traverse((child) => {
         if (child.type === "Mesh") {
@@ -50,8 +39,6 @@ export default class Cinema {
             child.material = this.materialCosmos;
           } else if (child.name.includes("Text")) {
             child.material = this.materialText;
-          } else {
-            // child.material = bakedMaterial;
           }
         }
       });
@@ -59,6 +46,4 @@ export default class Cinema {
       this.cinema.add(gltf.scene);
     });
   }
-
-  anim(progress, time) {}
 }

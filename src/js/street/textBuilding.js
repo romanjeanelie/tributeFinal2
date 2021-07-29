@@ -10,7 +10,6 @@ export default class TextBuilding {
 
     this.loadingManager = options.loadingManager;
     this.loader = new THREE.FontLoader(this.loadingManager);
-    this.textureLoader = new THREE.TextureLoader(this.loadingManager);
 
     this.materialsText = [];
     this.textsMesh = [];
@@ -23,7 +22,7 @@ export default class TextBuilding {
     this.texts = [
       {
         text: "DANCE",
-        font: "Gala2",
+        font: "Gala",
         posX: -59,
         posY: 22,
         posZ: 15,
@@ -34,7 +33,7 @@ export default class TextBuilding {
       },
       {
         text: "WITH ME",
-        font: "Gala2",
+        font: "Gala",
         posX: -44,
         posY: 12,
         posZ: 15,
@@ -44,7 +43,7 @@ export default class TextBuilding {
       },
       {
         text: "ON THE FLOOR",
-        font: "Gala2",
+        font: "Gala",
         posX: -14,
         posY: 20,
         posZ: 3,
@@ -56,46 +55,46 @@ export default class TextBuilding {
         text: "I want",
         font: "Milestone",
 
-        posX: 5,
+        posX: 12,
         posY: 13,
         posZ: 40,
         rotateY: -0.5,
         scale: 6,
-        color: "#F76E3B",
-        color2: "#FF1B7E",
+        color1: "#F76E3B",
+        color2: "#C6C067",
       },
       {
         text: "to feel you",
         font: "Milestone",
-        posX: 5,
+        posX: 9,
         posY: 8.5,
         posZ: 40,
         rotateY: -0.5,
         scale: 6,
-        color: "#F76E3B",
-        color2: "#FF1B7E",
+        color1: "#F76E3B",
+        color2: "#C6C067",
       },
       {
         text: "come back",
-        font: "Score Board_Regular",
+        font: "Score-Board_Regular",
 
         posX: -115,
         posY: 26,
         posZ: 76,
         rotateY: 0.4,
-        scale: 7,
+        scale: 6,
         color1: "#DEC2B0",
         color2: "#DEC2B0",
       },
       {
         text: "to me",
-        font: "Score Board_Regular",
+        font: "Score-Board_Regular",
 
         posX: -115,
         posY: 20,
         posZ: 76,
         rotateY: 0.4,
-        scale: 7,
+        scale: 6,
         color1: "#DEC2B0",
         color2: "#DEC2B0",
       },
@@ -107,8 +106,8 @@ export default class TextBuilding {
         posZ: 175,
         rotateY: 0.2,
         scale: 4,
-        color1: "#E600FF",
-        color2: "#FF0077",
+        color1: "#FF0077",
+        color2: "#E3D9CB",
       },
       {
         text: "LARGER THAN ME",
@@ -118,8 +117,8 @@ export default class TextBuilding {
         posZ: 175,
         rotateY: 0.2,
         scale: 4,
-        color1: "#E600FF",
-        color2: "#FF0077",
+        color1: "#FF0077",
+        color2: "#E3D9CB",
       },
     ];
 
@@ -186,18 +185,18 @@ export default class TextBuilding {
       },
 
       // FEEL YOU
-      {
-        posX: 2,
-        posY: 8.5,
-        posZ: 37,
-        scale: 3,
-      },
-      {
-        posX: 9,
-        posY: 8.5,
-        posZ: 42,
-        scale: 3,
-      },
+      // {
+      //   posX: 2,
+      //   posY: 8.5,
+      //   posZ: 37,
+      //   scale: 3,
+      // },
+      // {
+      //   posX: 9,
+      //   posY: 8.5,
+      //   posZ: 42,
+      //   scale: 3,
+      // },
     ];
 
     this.structures.forEach((structure) => {
@@ -281,11 +280,16 @@ export default class TextBuilding {
     });
 
     this.textsMesh.forEach((mesh, i) => {
-      mesh.position.y += time * 0.0012 * this.disperse;
-      mesh.position.x += i % 2 === 0 ? time * 0.0006 * this.disperse : -(time * 0.0006 * this.disperse);
-      mesh.position.z += time * 0.001 * this.disperse;
-      mesh.rotation.y += time * 0.00001 * this.disperse;
-      mesh.rotation.x += time * 0.001 * this.disperse * i * 0.01;
+      // mesh.position.y += time * 0.0012 * this.disperse;
+      // mesh.position.x += i % 2 === 0 ? time * 0.0006 * this.disperse : -(time * 0.0006 * this.disperse);
+      // mesh.position.z += time * 0.001 * this.disperse;
+      // mesh.rotation.y += time * 0.00001 * this.disperse;
+      // mesh.rotation.x += time * 0.001 * this.disperse * i * 0.01;
+      mesh.position.y += this.disperse * 0.1;
+      mesh.position.x += i % 2 === 0 ? this.disperse * 0.02 : -this.disperse * 0.02;
+      mesh.position.z += this.disperse * 0.06;
+      mesh.rotation.y += this.disperse * 0.001;
+      mesh.rotation.x += this.disperse * 0.001 * i;
     });
   }
 }

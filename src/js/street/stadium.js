@@ -14,7 +14,6 @@ export default class Stadium {
 
     this.loadingManager = options.loadingManager;
     this.gltfLoader = new GLTFLoader(this.loadingManager);
-    this.textureLoader = new THREE.TextureLoader(this.loadingManager);
 
     this.GLTFobjects = [];
 

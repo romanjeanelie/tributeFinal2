@@ -26,8 +26,8 @@ export default class Planet {
   }
 
   addPlanet() {
-    this.debugObject.planetColor1 = "#3a000a";
-    this.debugObject.planetColor2 = "#ffd5d5";
+    this.debugObject.planetColor1 = "#172b15";
+    this.debugObject.planetColor2 = "#ffffff";
     this.debugObject.planetColor3 = "#cc0f0f";
     this.folderPlanet.addColor(this.debugObject, "planetColor1").onChange(() => {
       this.planetMaterial.uniforms.color1.value = new THREE.Color(this.debugObject.planetColor1);

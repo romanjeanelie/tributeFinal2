@@ -9,7 +9,6 @@ export default class TextStars {
     this.scene = options.scene;
 
     this.loader = new THREE.FontLoader();
-    this.textureLoader = new THREE.TextureLoader();
     this.strengthValue = 1;
 
     this.textMaterial = null;
@@ -73,15 +72,6 @@ export default class TextStars {
         color: "#F76E3B",
         color2: "#FF1B7E",
       },
-      // {
-      //   text: "I CAN SHOW YOU THE NIGHT",
-      //   posX: -2000,
-      //   posY: -2050,
-      //   posZ: 10600,
-      //   scale: 180,
-      //   color: "#5450C6",
-      //   color2: "#1C003C",
-      // },
     ];
     this.loader.load("/fonts/Moniqa-ExtBold.json", (font) => {
       this.texts.forEach((textOptions) => {
@@ -160,12 +150,17 @@ export default class TextStars {
     });
 
     this.textsMesh.forEach((mesh, i) => {
-      mesh.position.x += i % 2 === 0 ? time * 0.003 * this.disperse : -(time * 0.003 * this.disperse);
-      mesh.position.y += time * 0.02 * this.disperse;
-      mesh.position.z += time * 0.07 * this.disperse;
+      // mesh.position.x += i % 2 === 0 ? time * 0.003 * this.disperse : -(time * 0.003 * this.disperse);
+      // mesh.position.y += time * 0.02 * this.disperse;
+      // mesh.position.z += time * 0.07 * this.disperse;
 
-      mesh.rotation.y += time * 0.00001 * this.disperse;
-      mesh.rotation.x += time * 0.001 * this.disperse * i * 0.01;
+      // mesh.rotation.y += time * 0.00001 * this.disperse;
+      // mesh.rotation.x += time * 0.001 * this.disperse * i * 0.01;
+      mesh.position.y += this.disperse * 0.1;
+      mesh.position.x += i % 2 === 0 ? this.disperse * 0.05 : -this.disperse * 0.05;
+      mesh.position.z += this.disperse * 0.1;
+      mesh.rotation.y += this.disperse * 0.0001;
+      mesh.rotation.x += this.disperse * 0.001 * i;
     });
   }
 }

@@ -6,13 +6,14 @@ import fragment from "../shaders/bridge/fragment";
 import vertex2 from "../shaders/bridge/vertex2";
 import fragment2 from "../shaders/bridge/fragment2";
 
+import bridgeLightsRopes from "./bridgeLightsRopes.json";
+
 export default class Bridge {
   constructor(options) {
     this.scene = options.scene;
 
     this.loadingManager = options.loadingManager;
     this.gltfLoader = new GLTFLoader(this.loadingManager);
-    this.textureLoader = new THREE.TextureLoader(this.loadingManager);
 
     this.lightsRoad = new THREE.Group();
     this.bridge = new THREE.Group();
@@ -38,41 +39,20 @@ export default class Bridge {
   }
 
   addBridge() {
-    this.lightsRopes = [];
-
     const material = new THREE.MeshBasicMaterial({
       color: 0x000000,
       side: THREE.DoubleSide,
       opacity: 1,
     });
 
-    const textMaterial = new THREE.MeshBasicMaterial({
-      color: new THREE.Color("#FF9000"),
-      side: THREE.DoubleSide,
-      opacity: 1,
-    });
-
-    const materialLight = new THREE.MeshBasicMaterial({
-      color: new THREE.Color("#FF9000"),
-      side: THREE.DoubleSide,
-      opacity: 0,
-      transparent: true,
-    });
-    this.gltfLoader.load("/models/bridge1.glb", (gltf) => {
+    this.gltfLoader.load("/models/bridge.glb", (gltf) => {
       gltf.scene.traverse((child) => {
         if (child.type === "Mesh") {
-          if (child.name.includes("Text")) {
-            child.material = textMaterial;
-          } else if (child.name.includes("lightRope")) {
-            child.material = materialLight;
-            this.lightsRopes.push(child.position);
-          } else {
-            child.material = material;
-          }
+          child.material = material;
         }
       });
 
-      this.createLightsRopes(this.lightsRopes);
+      this.createLightsRopes(bridgeLightsRopes);
       this.bridge.add(gltf.scene);
     });
   }

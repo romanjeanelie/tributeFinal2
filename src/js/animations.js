@@ -16,7 +16,6 @@ import Flower from "./flower";
 import CreatePath from "./camera/createPath";
 
 import debounce from "./utils/debounce";
-import ios from "./utils/ios";
 
 import Help from "./domElements/help";
 
@@ -43,7 +42,7 @@ export default class Animations {
     this.parallax = {
       target: { x: 0, y: 0 },
       eased: { x: 0, y: 0, multiplier: 4 },
-      multiplier: 3,
+      multiplier: 10,
     };
 
     this.steps = [1.4];
@@ -54,7 +53,7 @@ export default class Animations {
 
     // DEBUG MODE /////////////////////////////////////////////////////////////////////////////////
     this.backstage = false;
-    this.positionTimeline = 1;
+    this.positionTimeline = 0.53;
     this.start = 0;
     // DEBUG MODE /////////////////////////////////////////////////////////////////////////////////
 
@@ -125,8 +124,6 @@ export default class Animations {
   }
 
   displayHome() {
-    const durationIn = 2;
-    const durationOut = 2;
     const startBtn = document.getElementById("start");
 
     const tl = gsap.timeline();
@@ -184,7 +181,6 @@ export default class Animations {
     );
 
     // Fade out subtitle
-
     const subtitleSplit = new SplitText(".home__subtitle h2", { type: "words,chars" });
 
     let index1 = Math.round(subtitleSplit.chars.length / 2);
@@ -283,7 +279,9 @@ export default class Animations {
         btn.style.display = "none";
         document.querySelector(".help__click").style.display = "none";
         // Authorize scroll
-        document.body.style.overflow = "auto";
+        setTimeout(() => {
+          document.body.style.overflow = "auto";
+        }, 1000);
       }
     });
 
@@ -346,7 +344,6 @@ export default class Animations {
       flower: this.flower,
       sky: this.sky,
       finalScene: this.finalScene,
-      screen: this.createPath.cameraPath.screenMaterial,
       textGod: this.textGod,
       textFinal: this.textFinal,
       plane: this.plane,
@@ -463,8 +460,6 @@ export default class Animations {
   }
 
   stepFour() {
-    const camera = this.createPath.cameraPath.splineCamera;
-
     // Help
     let scrollActive = false;
     setTimeout(() => {
@@ -513,8 +508,6 @@ export default class Animations {
     );
 
     const tlSky = gsap.timeline({ paused: true });
-    const road = this.road;
-    const plane = this.plane;
 
     tlSky.to(this.sky, {
       opacity: 1,
@@ -527,19 +520,23 @@ export default class Animations {
         progress: 19500,
         duration: 20,
         ease: "linear",
-        onUpdate: function () {
-          if (this.progress() > 0.234) {
+        onUpdate: () => {
+          console.log(this.tl4.progress());
+          if (this.tl4.progress() > 0.234) {
             tlSky.play();
           }
-          if (this.progress() > 0.66) {
-            road.stadium.stadium.clear();
-            road.bridge.bridge.clear();
-            road.buildingsGroup.clear();
-            plane.isActive = true;
+          if (this.tl4.progress() > 0.66) {
+            this.road.stadium.stadium.clear();
+            this.road.bridge.bridge.clear();
+            this.road.buildingsGroup.clear();
+            this.plane.isActive = true;
           }
-          console.log(this.progress());
+          if (this.tl4.progress() < 1) {
+            this.buttons.hide();
+          }
         },
         onComplete: () => {
+          console.log("complete");
           if (this.backstage) {
             setTimeout(() => {
               document.querySelector(".help__scroll").style.display = "none";
@@ -564,10 +561,6 @@ export default class Animations {
       },
       "<"
     );
-  }
-
-  finalStep() {
-    const camera = this.createPath.cameraPath.splineCamera;
   }
 
   animCamera(progress, time, parallax) {
@@ -599,10 +592,10 @@ export default class Animations {
     this.time += 0.0001 * speedFactor;
     this.progress = this.scrollValue * 1.1;
 
+    // Parallax
     const deltaTime = this.time - this.lastElapsedTime;
     this.lastElapsedTime = this.time;
 
-    // Parallax
     this.parallax.eased.x +=
       (this.parallax.target.x - this.parallax.eased.x) * deltaTime * this.parallax.eased.multiplier;
     this.parallax.eased.y +=
@@ -616,7 +609,7 @@ export default class Animations {
       this.singlePoint.points.pointsMaterial.uniforms.opacity.value = 1;
       this.tl2.play();
       this.singlePoint.mesh.position.y = this.createPath.cameraPath.splineCamera.position.y;
-      this.sky.opacity = 1;
+      this.sky.opacity = 0;
     }
     ///////////////////////////////////////// End Test without scrollBar
 
@@ -624,5 +617,7 @@ export default class Animations {
     this.animCamera(this.progress, this.time, this.parallax);
     this.animObjects(this.progress, this.time);
     this.animText(this.progress, this.time);
+
+    // document.querySelector(".info").innerHTML = this.progress;
   }
 }

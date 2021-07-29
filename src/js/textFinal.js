@@ -10,7 +10,6 @@ export default class TextFinal {
 
     this.loadingManager = options.loadingManager;
     this.loader = new THREE.FontLoader(this.loadingManager);
-    this.textureLoader = new THREE.TextureLoader(this.loadingManager);
     this.strengthValue = 1;
 
     this.textMaterial = null;

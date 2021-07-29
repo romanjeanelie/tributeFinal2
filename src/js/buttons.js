@@ -15,6 +15,8 @@ export default class Buttons {
   constructor(options) {
     this.gui = options.gui;
     this.debugObject = {};
+    this.folderButton = this.gui.addFolder("Button");
+    this.folderButton.open();
 
     this.loadingManager = options.loadingManager;
     this.loader = new THREE.FontLoader(this.loadingManager);
@@ -30,7 +32,6 @@ export default class Buttons {
     this.flower = options.flower;
     this.sky = options.sky;
     this.backSky = options.backSky;
-    this.screen = options.screen;
     this.textGod = options.textGod;
     this.textFinal = options.textFinal;
     this.plane = options.plane;
@@ -64,10 +65,13 @@ export default class Buttons {
   init() {
     this.createButton({ text: "PLAY", x: 0, y: 0, z: 0 });
 
-    this.buttons.position.y = -1385;
-    this.buttons.position.z = 18400;
+    // this.buttons.position.y = -1050;
+    // this.buttons.position.z = 18400;
+    this.buttons.position.y = -1650;
+    this.buttons.position.z = 16400;
 
-    this.buttons.scale.set(3.5, 3.5, 3.5);
+    // this.buttons.scale.set(3.5, 3.5, 3.5);
+    this.buttons.scale.set(7, 7, 7);
 
     this.objectsToTest = this.buttonsMesh;
 
@@ -95,16 +99,16 @@ export default class Buttons {
       const materialTextClicked = this.textMaterial;
 
       gsap.to(this.buttons.position, {
-        z: 18400 - 20,
+        z: 16400 - 20,
         duration: 0.5,
       });
 
-      gsap.to(materialBtnClicked.uniforms.changeColor, {
-        value: 0,
+      gsap.to(materialBtnClicked.uniforms.changeColor2, {
+        value: 1,
         duration: 0.5,
       });
-      gsap.to(materialTextClicked.uniforms.changeColor, {
-        value: 0,
+      gsap.to(materialTextClicked.uniforms.changeColor2, {
+        value: 1,
         duration: 0.5,
       });
 
@@ -139,7 +143,7 @@ export default class Buttons {
     steps.one = 15;
     steps.two = 20;
     steps.three = 35;
-    steps.four = 57;
+    steps.four = 58;
     steps.five = 86;
     steps.six = 112;
     steps.seven = 163;
@@ -150,7 +154,7 @@ export default class Buttons {
       this.sky.animColors,
       {
         value: 1,
-        duration: 30,
+        duration: 60,
       },
       "<"
     );
@@ -158,7 +162,7 @@ export default class Buttons {
       this.sky.changeColor,
       {
         value: 0,
-        duration: 30,
+        duration: 60,
       },
       "<"
     );
@@ -234,8 +238,8 @@ export default class Buttons {
       this.flower.particlesMaterial.uniforms.scaleSize,
       {
         value: 1.5,
-        duration: 7,
-        ease: "power1.inOut",
+        duration: 100,
+        ease: "power2.inOut",
       },
       "<"
     );
@@ -296,7 +300,7 @@ export default class Buttons {
       {
         value: 0,
         delay: steps.three - steps.two,
-        duration: 15,
+        duration: 22,
       },
       "<"
     );
@@ -305,7 +309,7 @@ export default class Buttons {
       this.textFinal.materialsText[1].uniforms.opacity,
       {
         value: 1,
-        duration: 30,
+        duration: 45,
       },
       "<"
     );
@@ -408,6 +412,23 @@ export default class Buttons {
     );
 
     this.tl.to(
+      this.road.textBuilding,
+      {
+        duration: 30,
+        opacity: 0,
+      },
+      "<"
+    );
+    this.tl.to(
+      this.textStars,
+      {
+        duration: 30,
+        opacity: 0,
+      },
+      "<"
+    );
+
+    this.tl.to(
       this.cityLights.textLight,
       {
         duration: 30,
@@ -477,6 +498,28 @@ export default class Buttons {
   }
 
   createButton(options) {
+    this.debugObject.color1 = "#0b0b0b";
+    this.debugObject.color2 = "#a40067";
+    this.debugObject.color3 = "#0b0b0b";
+    this.debugObject.colorText = "#e8e8c6";
+    this.debugObject.colorText3 = "#0b0b0b";
+
+    this.folderButton.addColor(this.debugObject, "colorText").onChange(() => {
+      this.textMaterial.uniforms.uColor2.value = new THREE.Color(this.debugObject.colorText);
+    });
+    this.folderButton.addColor(this.debugObject, "colorText3").onChange(() => {
+      this.textMaterial.uniforms.uColor3.value = new THREE.Color(this.debugObject.colorText3);
+    });
+
+    this.folderButton.addColor(this.debugObject, "color1").onChange(() => {
+      this.materialButton.uniforms.uColor1.value = new THREE.Color(this.debugObject.color1);
+    });
+    this.folderButton.addColor(this.debugObject, "color2").onChange(() => {
+      this.materialButton.uniforms.uColor2.value = new THREE.Color(this.debugObject.color2);
+    });
+    this.folderButton.addColor(this.debugObject, "color3").onChange(() => {
+      this.materialButton.uniforms.uColor3.value = new THREE.Color(this.debugObject.color3);
+    });
     this.loader.load("/fonts/Soleil_Regular.json", (font) => {
       const textGeometry = new THREE.TextGeometry(options.text, {
         font: font,
@@ -491,9 +534,11 @@ export default class Buttons {
         uniforms: {
           time: { value: 0 },
           opacity: { value: 1 },
-          uColor1: { value: new THREE.Color("#2E0000") },
-          uColor2: { value: new THREE.Color("#fff") },
+          uColor1: { value: new THREE.Color(this.debugObject.color1) },
+          uColor2: { value: new THREE.Color(this.debugObject.colorText) },
+          uColor3: { value: new THREE.Color(this.debugObject.colorText3) },
           changeColor: { value: 0 },
+          changeColor2: { value: 0 },
         },
         transparent: true,
         vertexShader: vertexText,
@@ -504,7 +549,7 @@ export default class Buttons {
 
       textMesh.position.x = options.x;
       textMesh.position.y = options.y + 2;
-      textMesh.position.z = options.z + 15;
+      textMesh.position.z = options.z + 20;
       textMesh.scale.set(6.5, 6.5, 6.5);
 
       this.textsMesh.push(textMesh);
@@ -514,9 +559,11 @@ export default class Buttons {
         uniforms: {
           time: { value: 0 },
           opacity: { value: 1 },
-          uColor1: { value: new THREE.Color("#2E0000") },
-          uColor2: { value: new THREE.Color("#B10026") },
+          uColor1: { value: new THREE.Color(this.debugObject.color1) },
+          uColor2: { value: new THREE.Color(this.debugObject.color2) },
+          uColor3: { value: new THREE.Color(this.debugObject.color3) },
           changeColor: { value: 0 },
+          changeColor2: { value: 0 },
         },
         transparent: true,
         vertexShader: vertex,
@@ -564,6 +611,20 @@ export default class Buttons {
     }, 5000);
   }
 
+  hide() {
+    gsap.to(this.materialButton.uniforms.changeColor, {
+      value: 0,
+    });
+    gsap.to(this.textMaterial.uniforms.changeColor, {
+      value: 0,
+    });
+
+    document.querySelector(".btn__wrapper .play").style.pointerEvents = "none";
+
+    // Help
+    this.help.hidePlay();
+  }
+
   hoverLinks() {
     const linkRoman = document.querySelector(".link__roman");
     const linkBeau = document.querySelector(".link__beau");
@@ -606,7 +667,7 @@ export default class Buttons {
       screenPosition.project(this.camera);
       const translateX = screenPosition.x * this.sizes.width * 1600;
       const translateY = screenPosition.y * this.sizes.height * 9;
-      this.btnPlay.style.transform = `translateX(${translateX}px) translateY(${translateY + 42}px)`;
+      this.btnPlay.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`;
     }
     if (this.debug) {
       this.sky.opacity = 0;

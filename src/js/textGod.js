@@ -15,7 +15,6 @@ export default class TextGod {
 
     this.loadingManager = options.loadingManager;
     this.loader = new THREE.FontLoader(this.loadingManager);
-    this.textureLoader = new THREE.TextureLoader(this.loadingManager);
 
     this.strengthValue = 1;
 
@@ -52,8 +51,8 @@ export default class TextGod {
   }
 
   addText() {
-    this.debugObject.color = "#202b6b";
-    this.debugObject.color2 = "#ff18a2";
+    this.debugObject.color = "#77744f";
+    this.debugObject.color2 = "#e4ffec";
 
     const texts = ["LIFE IS A GRAIN OF SALT IN THE EYES OF GOD", ""];
     this.loader.load("/fonts/Moniqa-ExtBold_Italic.json", (font) => {

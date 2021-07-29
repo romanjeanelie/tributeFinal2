@@ -33,7 +33,7 @@ color = mix(uColor1, uColor2, vNormal.z);
 
   // gl_FragColor = vec4(color, newNormal);
   // gl_FragColor = vec4(uColor1 * opacity, 1.);
-  gl_FragColor = vec4(color, 1.);
+  gl_FragColor = vec4(color, opacity);
 
     
 }

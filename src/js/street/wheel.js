@@ -1,9 +1,5 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler.js";
-
-import vertex from "../shaders/wheel/seats/vertex";
-import fragment from "../shaders/wheel/seats/fragment";
 
 import vertex2 from "../shaders/wheel/branches/vertex2";
 import fragment2 from "../shaders/wheel/branches/fragment2";
@@ -27,8 +23,6 @@ export default class Wheel {
   }
 
   init() {
-    this.addMainWheel();
-    this.addBaseWheel();
     this.createBranch();
     this.createCircle();
     this.createLightBase();
@@ -46,45 +40,6 @@ export default class Wheel {
 
     this.wheel.scale.set(1, 1, 1);
     this.scene.add(this.wheel);
-  }
-
-  addMainWheel() {
-    this.seatPositions = [];
-
-    const material = new THREE.MeshBasicMaterial({ color: 0xff0000, opacity: 1, transparent: true });
-
-    this.gltfLoader.load("/models/mainWheel.glb", (gltf) => {
-      gltf.scene.traverse((child) => {
-        if (child.name.includes("Seat")) {
-          this.seatPositions.push(child.position);
-        } else {
-          // child.material = material;
-        }
-      });
-
-      gltf.scene.position.x = -0.17;
-      gltf.scene.position.y = -14.6;
-
-      // this.mainWheel.add(gltf.scene);
-
-      // this.createLightSeats(this.seatPositions);
-    });
-  }
-
-  addBaseWheel() {
-    const material = new THREE.MeshBasicMaterial({
-      color: 0xff0000,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-      transparent: true,
-      //depthWrite: false,
-    });
-    this.gltfLoader.load("/models/baseWheel.glb", (gltf) => {
-      gltf.scene.traverse((child) => {
-        // child.material = material;
-      });
-      // this.baseWheel.add(gltf.scene);
-    });
   }
 
   createLightBase() {
@@ -225,44 +180,6 @@ export default class Wheel {
 
       this.mainWheel.add(branch);
     }
-  }
-
-  createLightSeats(positionsWindow) {
-    const count = positionsWindow.length;
-    this.pointsMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-        uOpacity: { value: 1 },
-        uColor: { value: new THREE.Color("#261017") },
-      },
-      vertexShader: vertex,
-      fragmentShader: fragment,
-      transparent: true,
-      // depthWrite: false,
-    });
-
-    const pointsGeometry = new THREE.BufferGeometry();
-
-    const positions = new Float32Array(count * 3);
-    const size = new Float32Array(count);
-    const opacity = new Float32Array(count);
-
-    for (let i = 0; i < count; i++) {
-      const i3 = i * 3;
-      positions[i3 + 0] = positionsWindow[i].x;
-      positions[i3 + 1] = positionsWindow[i].y - 15.6;
-      positions[i3 + 2] = positionsWindow[i].z - 0.5;
-
-      size[i] = 20000;
-      opacity[i] = Math.random();
-    }
-
-    pointsGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    pointsGeometry.setAttribute("size", new THREE.BufferAttribute(size, 1));
-    pointsGeometry.setAttribute("opacity", new THREE.BufferAttribute(opacity, 1));
-
-    const points = new THREE.Points(pointsGeometry, this.pointsMaterial);
-    // this.mainWheel.add(points);
   }
 
   anim(progress, time) {

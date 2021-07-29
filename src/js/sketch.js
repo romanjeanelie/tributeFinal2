@@ -56,8 +56,6 @@ export default class Sketch {
     this.setupResize();
     this.setClearColor();
 
-    this.addFog();
-
     //this.addObject();
     this.animations = new Animations({
       camera: this.camera,
@@ -105,15 +103,6 @@ export default class Sketch {
     this.folderSketch
       .addColor(this.debugObject, "clearColor")
       .onChange(() => this.renderer.setClearColor(this.debugObject.clearColor));
-  }
-
-  addFog() {
-    this.debugObject.fogColor = "#000";
-    this.folderSketch
-      .addColor(this.debugObject, "fogColor")
-      .onChange(() => (fog.color = new THREE.Color(this.debugObject.fogColor)));
-    const fog = new THREE.Fog(this.debugObject.fogColor, 1, 2000);
-    //  this.scene.fog = fog;
   }
 
   render() {

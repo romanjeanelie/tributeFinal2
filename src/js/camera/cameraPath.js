@@ -1,8 +1,5 @@
 import * as THREE from "three";
 
-import vertex from "../shaders/screen/vertex.glsl";
-import fragment from "../shaders/screen/fragment.glsl";
-
 export default class cameraPath {
   constructor(options) {
     this.camera = options.camera;
@@ -101,43 +98,17 @@ export default class cameraPath {
     this.cameraHelper.visible = !this.params.cameraHelper;
   }
 
-  addScreen(ratio) {
-    this.screenGeometry = new THREE.PlaneBufferGeometry(0.1, 2);
-    this.screenMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        time: { value: 0 },
-        thickFactor: { value: 1 },
-        progress: { value: 0 },
-        opacity: { value: 1 },
-        wide: { value: 0 },
-        uColor: { value: new THREE.Color("#ffffff") },
-      },
-      vertexShader: vertex,
-      fragmentShader: fragment,
-      transparent: true,
-    });
-
-    this.screen = new THREE.Mesh(this.screenGeometry, this.screenMaterial);
-    this.screen.position.z = -1;
-
-    this.screenGeometry.center();
-  }
-
   resize(width, height) {
     this.sizes.width = width;
     this.sizes.height = height;
     const ratio = this.sizes.width / this.sizes.height;
     this.splineCamera.aspect = ratio;
     this.splineCamera.updateProjectionMatrix();
-
-    const widthScreen = Math.tan(70 / 2) / Math.abs(this.screen.position.z);
-    this.screen.scale.x = ratio * 14;
   }
 
   init() {
     // Camera
     this.cameraGroup = new THREE.Group();
-    this.addScreen();
 
     this.splineCamera = new THREE.PerspectiveCamera(70, this.sizes.width / this.sizes.height, 0.01, 115000);
 
@@ -194,10 +165,6 @@ export default class cameraPath {
     }
 
     this.renderer.render(this.scene, this.params.animationView === true ? this.splineCamera : this.camera);
-
-    // Update screen
-    this.screenMaterial.uniforms.time.value = time;
-    this.screenMaterial.uniforms.progress.value = progress;
   }
 }
 

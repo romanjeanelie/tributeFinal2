@@ -3,8 +3,6 @@ import gsap from "gsap";
 
 import fragment from "./shaders/textIntro/fragment.glsl";
 import vertex from "./shaders/textIntro/vertex.glsl";
-// import fragment from "./shaders/textPoint/fragment.glsl";
-// import vertex from "./shaders/textPoint/vertex.glsl";
 
 export default class TextPoint {
   constructor(options) {
@@ -12,7 +10,6 @@ export default class TextPoint {
 
     this.loadingManager = options.loadingManager;
     this.loader = new THREE.FontLoader(this.loadingManager);
-    this.textureLoader = new THREE.TextureLoader(this.loadingManager);
 
     this.strengthValue = 1;
 

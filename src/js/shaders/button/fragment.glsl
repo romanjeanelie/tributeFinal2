@@ -2,7 +2,9 @@ uniform float time;
 uniform float wide;
 uniform vec3 uColor1;
 uniform vec3 uColor2;
+uniform vec3 uColor3;
 uniform float changeColor;
+uniform float changeColor2;
 uniform float opacity;
 
 varying vec2 vUv;
@@ -31,8 +33,10 @@ void main()	{
 
     vec3 color1 = mix(uColor1, vec3(0.02), 1. - color );
     vec3 color2 = mix(uColor2, vec3(0.02), 1. - color );
+    vec3 color3 = mix(uColor3, vec3(0.02), 1. - color );
 
     color = mix(color1, color2, changeColor);
+    color = mix(color, color3, changeColor2);
 
 
     // color *= strobeLight;

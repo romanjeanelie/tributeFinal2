@@ -21,11 +21,6 @@ export default class ElectricPole {
         y: 41,
         z: -50,
       },
-      //   {
-      //     x: -280,
-      //     y: 70,
-      //     z: -50,
-      //   },
     ];
 
     this.poles.forEach((el) => {
@@ -55,6 +50,4 @@ export default class ElectricPole {
       this.scene.add(pole);
     });
   }
-
-  anim(progress, time) {}
 }

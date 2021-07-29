@@ -2,8 +2,6 @@ import * as THREE from "three";
 
 import fragment from "../shaders/moon/fragment.glsl";
 import vertex from "../shaders/moon/vertex.glsl";
-import TextMoon from "./textMoon";
-import Atmosphere from "./atmosphere";
 
 export default class Moon {
   constructor(options) {
@@ -14,17 +12,13 @@ export default class Moon {
 
     this.scene = options.scene;
     this.moon = new THREE.Group();
-
-    this.textMoon = new TextMoon({ scene: this.moon, gui: this.folderMoon });
-    this.atmosphere = new Atmosphere({ scene: this.moon, gui: this.folderMoon });
   }
 
   init() {
     this.addMoon();
-    //  this.atmosphere.init();
 
     this.moon.position.x = -6000;
-    this.moon.position.y = -3000;
+    this.moon.position.y = -1000;
     this.moon.position.z = -1000;
 
     this.moon.rotation.z = -0.5;
@@ -36,10 +30,10 @@ export default class Moon {
   }
 
   addMoon() {
-    this.debugObject.moonColor1 = "#ff4c00";
-    this.debugObject.moonColor2 = "#ff009e";
+    this.debugObject.moonColor1 = "#cf9d50";
+    this.debugObject.moonColor2 = "#e5681f";
     this.debugObject.moonColor3 = "#000";
-    this.debugObject.moonColor4 = "#fff";
+    this.debugObject.moonColor4 = "#f5c263";
     this.folderMoon.addColor(this.debugObject, "moonColor1").onChange(() => {
       this.moonMaterial.uniforms.color1.value = new THREE.Color(this.debugObject.moonColor1);
     });
