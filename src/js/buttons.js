@@ -499,7 +499,7 @@ export default class Buttons {
 
   createButton(options) {
     this.debugObject.color1 = "#0b0b0b";
-    this.debugObject.color2 = "#a40067";
+    this.debugObject.color2 = "#490422";
     this.debugObject.color3 = "#0b0b0b";
     this.debugObject.colorText = "#e8e8c6";
     this.debugObject.colorText3 = "#0b0b0b";
