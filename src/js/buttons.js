@@ -498,9 +498,9 @@ export default class Buttons {
 
   createButton(options) {
     this.debugObject.color1 = "#0b0b0b";
-    this.debugObject.color2 = "#0800c0";
+    this.debugObject.color2 = "#d70358";
     this.debugObject.color3 = "#0b0b0b";
-    this.debugObject.colorText = "#ff00ef";
+    this.debugObject.colorText = "#e1e1e1";
     this.debugObject.colorText3 = "#0b0b0b";
 
     this.folderButton.addColor(this.debugObject, "colorText").onChange(() => {
