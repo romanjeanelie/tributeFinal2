@@ -17,7 +17,7 @@ export default class Cinema {
   }
 
   init() {
-    this.debugObject.color = "#e7fbd2";
+    this.debugObject.color = "#ceec72";
 
     this.folderCinema.addColor(this.debugObject, "color").onChange(() => {
       this.materialCosmos.color = new THREE.Color(this.debugObject.color);

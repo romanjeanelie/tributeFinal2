@@ -24,11 +24,11 @@ export default class TextBuilding {
 
   init() {
     this.debugObject.color1 = "#79b4ff";
-    this.debugObject.color2 = "#fdfa6b";
-    this.debugObject.ComeBackcolor1 = "#fcd282";
-    this.debugObject.ComeBackcolor2 = "#f6fffd";
-    this.debugObject.YourHeartcolor1 = "#920017";
-    this.debugObject.YourHeartcolor2 = "#ecf4e0";
+    this.debugObject.color2 = "#bdf334";
+    this.debugObject.ComeBackcolor1 = "#e382fc";
+    this.debugObject.ComeBackcolor2 = "#eaeeb2";
+    this.debugObject.YourHeartcolor1 = "#4e51fa";
+    this.debugObject.YourHeartcolor2 = "#ff92ee";
 
     this.texts = [
       {
