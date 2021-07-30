@@ -32,7 +32,7 @@ export default class cameraPath {
     this.playPressed = false;
 
     // ACTIVE CAMERA /////////////////
-    this.isActive = true;
+    this.isActive = false;
     window.camera = this.camera;
     // ACTIVE CAMERA /////////////////
 
