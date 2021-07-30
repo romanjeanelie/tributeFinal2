@@ -70,8 +70,6 @@ export default class Animations {
         window.setTimeout(() => {
           this.displayHome();
         }, 500);
-
-        window.setTimeout(() => {}, 500);
       },
 
       // Progress

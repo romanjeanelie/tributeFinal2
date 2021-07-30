@@ -136,7 +136,6 @@ export default class Buttons {
       start = this.start;
       this.tl.paused = true;
       this.audio.pause();
-      setTimeout(() => {}, 500);
     }
 
     const steps = {};
