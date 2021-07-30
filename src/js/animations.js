@@ -53,7 +53,7 @@ export default class Animations {
 
     // DEBUG MODE /////////////////////////////////////////////////////////////////////////////////
     this.backstage = false;
-    this.positionTimeline = 0.53;
+    this.positionTimeline = 2;
     this.start = 0;
     // DEBUG MODE /////////////////////////////////////////////////////////////////////////////////
 
@@ -525,18 +525,23 @@ export default class Animations {
           if (this.tl4.progress() > 0.234) {
             tlSky.play();
           }
-          if (this.tl4.progress() > 0.66) {
+          if (this.tl4.progress() > 0.65) {
             this.road.stadium.stadium.clear();
             this.road.bridge.bridge.clear();
             this.road.buildingsGroup.clear();
             this.plane.isActive = true;
           }
           if (this.tl4.progress() < 1) {
-            this.buttons.hide();
+            if (this.backstage) {
+              setTimeout(() => {
+                this.buttons.hide();
+              }, 600);
+            } else {
+              this.buttons.hide();
+            }
           }
         },
         onComplete: () => {
-          console.log("complete");
           if (this.backstage) {
             setTimeout(() => {
               document.querySelector(".help__scroll").style.display = "none";

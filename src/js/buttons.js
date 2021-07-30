@@ -16,7 +16,7 @@ export default class Buttons {
     this.gui = options.gui;
     this.debugObject = {};
     this.folderButton = this.gui.addFolder("Button");
-    this.folderButton.open();
+    this.folderButton.close();
 
     this.loadingManager = options.loadingManager;
     this.loader = new THREE.FontLoader(this.loadingManager);
@@ -171,7 +171,7 @@ export default class Buttons {
       this.sky.mesh.position,
       {
         y: -8000,
-        duration: 50,
+        duration: 20,
       },
       "<"
     );
@@ -179,7 +179,7 @@ export default class Buttons {
       this.sky.mesh.scale,
       {
         y: 3000,
-        duration: 50,
+        duration: 30,
       },
       "<"
     );
@@ -190,7 +190,7 @@ export default class Buttons {
         x: -5000,
         y: 1000,
         z: 10000,
-        duration: 60,
+        duration: 50,
       },
       "<"
     );
@@ -387,7 +387,7 @@ export default class Buttons {
       this.flower.particlesMaterial.uniforms.changeColor,
       {
         value: 0,
-        duration: 30,
+        duration: 65,
         ease: "power2.in",
       },
       "<"
@@ -414,7 +414,7 @@ export default class Buttons {
     this.tl.to(
       this.road.textBuilding,
       {
-        duration: 30,
+        duration: 10,
         opacity: 0,
       },
       "<"
@@ -422,7 +422,7 @@ export default class Buttons {
     this.tl.to(
       this.textStars,
       {
-        duration: 30,
+        duration: 10,
         opacity: 0,
       },
       "<"
@@ -499,7 +499,7 @@ export default class Buttons {
 
   createButton(options) {
     this.debugObject.color1 = "#0b0b0b";
-    this.debugObject.color2 = "#490422";
+    this.debugObject.color2 = "#b8005b";
     this.debugObject.color3 = "#0b0b0b";
     this.debugObject.colorText = "#e8e8c6";
     this.debugObject.colorText3 = "#0b0b0b";

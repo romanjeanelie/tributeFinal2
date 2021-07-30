@@ -51,8 +51,8 @@ export default class TextGod {
   }
 
   addText() {
-    this.debugObject.color = "#77744f";
-    this.debugObject.color2 = "#e4ffec";
+    this.debugObject.color = "#fff1b6";
+    this.debugObject.color2 = "#eff6ce";
 
     const texts = ["LIFE IS A GRAIN OF SALT IN THE EYES OF GOD", ""];
     this.loader.load("/fonts/Moniqa-ExtBold_Italic.json", (font) => {
@@ -60,7 +60,7 @@ export default class TextGod {
         // Position
         this.textGroup.rotation.x = Math.PI;
         this.textGroup.position.y = -2500;
-        this.textGroup.position.z = -2000;
+        this.textGroup.position.z = -2300;
         this.textGroup.children[0].position.y = 20;
         this.textGroup.children[1].position.y = -20;
         this.textGroup.scale.set(25, 25, 25);

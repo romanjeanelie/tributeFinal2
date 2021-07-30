@@ -69,8 +69,8 @@ export default class Plane {
   }
 
   createText(options) {
-    this.debugObject.textColor1 = "#fdecd3";
-    this.debugObject.textColor2 = "#eac361";
+    this.debugObject.textColor1 = "#fde3dd";
+    this.debugObject.textColor2 = "#f974c4";
 
     this.folderPlane.addColor(this.debugObject, "textColor1").onChange(() => {
       this.textMaterial.uniforms.uColor.value = new THREE.Color(this.debugObject.textColor1);

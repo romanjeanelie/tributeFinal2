@@ -11,6 +11,11 @@ import fragment4 from "../shaders/wheel/base/fragment";
 
 export default class Wheel {
   constructor(options) {
+    this.gui = options.gui;
+    this.debugObject = {};
+    this.folderWheel = this.gui.addFolder("Wheel");
+    this.folderWheel.close();
+
     this.scene = options.scene;
 
     this.loadingManager = options.loadingManager;
@@ -43,6 +48,16 @@ export default class Wheel {
   }
 
   createLightBase() {
+    this.debugObject.baseColor1 = "#85e6f9";
+    this.debugObject.baseColor2 = "#FFFFFF";
+
+    this.folderWheel.addColor(this.debugObject, "baseColor1").onChange(() => {
+      faceMaterial.uniforms.uColor1.value = new THREE.Color(this.debugObject.baseColor1);
+    });
+    this.folderWheel.addColor(this.debugObject, "baseColor2").onChange(() => {
+      faceMaterial.uniforms.uColor2.value = new THREE.Color(this.debugObject.baseColor2);
+    });
+
     const nbFaces = 7;
     const faceA = new THREE.Group();
     const faceB = new THREE.Group();
@@ -50,8 +65,8 @@ export default class Wheel {
     const faceGeometry = new THREE.PlaneBufferGeometry(1.5, 4);
     const faceMaterial = new THREE.ShaderMaterial({
       uniforms: {
-        uColor1: { value: new THREE.Color("#E77F68") },
-        uColor2: { value: new THREE.Color("#FFFFFF") },
+        uColor1: { value: new THREE.Color(this.debugObject.baseColor1) },
+        uColor2: { value: new THREE.Color(this.debugObject.baseColor2) },
       },
       vertexShader: vertex4,
       fragmentShader: fragment4,
@@ -96,6 +111,15 @@ export default class Wheel {
   }
 
   createCircle() {
+    this.debugObject.circleColor1 = "#fbffdc";
+    this.debugObject.circleColor2 = "#FFFFFF";
+
+    this.folderWheel.addColor(this.debugObject, "circleColor1").onChange(() => {
+      material.uniforms.color1.value = new THREE.Color(this.debugObject.circleColor1);
+    });
+    this.folderWheel.addColor(this.debugObject, "circleColor2").onChange(() => {
+      material.uniforms.color2.value = new THREE.Color(this.debugObject.circleColor2);
+    });
     const numberPoints = 100;
 
     const curve = new THREE.EllipseCurve(
@@ -112,39 +136,37 @@ export default class Wheel {
     const points = curve.getPoints(numberPoints);
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
-    // Add random attribute
-    const random = new Float32Array(numberPoints);
-
-    for (let i = 0; i < numberPoints; i++) {
-      random[i] = Math.random();
-    }
-
-    geometry.setAttribute("aRandom", new THREE.BufferAttribute(random, 1));
-
     // Material
     const material = new THREE.ShaderMaterial({
       uniforms: {
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-        color1: { value: new THREE.Color("#FBE9E5") },
-        color2: { value: new THREE.Color("#FFFFFF") },
+        color1: { value: new THREE.Color(this.debugObject.circleColor1) },
+        color2: { value: new THREE.Color(this.debugObject.circleColor2) },
         uOpacity: { value: 1 },
       },
       vertexShader: vertex3,
       fragmentShader: fragment3,
       transparent: true,
-      depthWrite: false,
-      depthTest: false,
+      // depthWrite: false,
+      // depthTest: false,
     });
-    // const material = new THREE.PointsMaterial({
-    //   color: 0xff0000,
-    //   size: 10,
-    // });
+
     const circle = new THREE.Points(geometry, material);
 
     this.mainWheel.add(circle);
   }
 
   createBranch() {
+    this.debugObject.branchColor1 = "#e1f4bd";
+    this.debugObject.branchColor2 = "#dac28a";
+
+    this.folderWheel.addColor(this.debugObject, "branchColor1").onChange(() => {
+      this.branchMaterial.uniforms.uColor1.value = new THREE.Color(this.debugObject.branchColor1);
+    });
+    this.folderWheel.addColor(this.debugObject, "branchColor2").onChange(() => {
+      this.branchMaterial.uniforms.uColor2.value = new THREE.Color(this.debugObject.branchColor2);
+    });
+
     // Branches
     const nbPointsBranch = 30;
     const nbBranches = 6;
@@ -163,8 +185,8 @@ export default class Wheel {
 
     this.branchMaterial = new THREE.ShaderMaterial({
       uniforms: {
-        uColor1: { value: new THREE.Color("#FDF4E4") },
-        uColor2: { value: new THREE.Color("#0917FC") },
+        uColor1: { value: new THREE.Color(this.debugObject.branchColor1) },
+        uColor2: { value: new THREE.Color(this.debugObject.branchColor2) },
       },
       vertexShader: vertex2,
       fragmentShader: fragment2,

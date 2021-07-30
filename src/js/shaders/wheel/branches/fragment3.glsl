@@ -1,5 +1,4 @@
 varying vec2 vUv;
-varying float vOpacity; 
 
 
 uniform vec3 color1;
@@ -21,6 +20,6 @@ void main(){
     float distanceToCenter = distance(gl_PointCoord, vec2(0.5));
     float strength = (0.05 / distanceToCenter - 0.1) * 1.;
 
-
-    gl_FragColor = vec4(color1, strength*5. * 1.);
+    color = mix(color1, color2, vUv.y);
+    gl_FragColor = vec4(color, strength*5. * 1.);
 }

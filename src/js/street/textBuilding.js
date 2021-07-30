@@ -6,6 +6,10 @@ import fragment from "../shaders/buildings/text/fragment";
 export default class TextBuilding {
   constructor(options) {
     this.gui = options.gui;
+    this.debugObject = {};
+    this.folderTextBuilding = this.gui.addFolder("TextBuilding");
+    this.folderTextBuilding.open();
+
     this.scene = options.scene;
 
     this.loadingManager = options.loadingManager;
@@ -19,6 +23,13 @@ export default class TextBuilding {
   }
 
   init() {
+    this.debugObject.color1 = "#79b4ff";
+    this.debugObject.color2 = "#fdfa6b";
+    this.debugObject.ComeBackcolor1 = "#fcd282";
+    this.debugObject.ComeBackcolor2 = "#f6fffd";
+    this.debugObject.YourHeartcolor1 = "#920017";
+    this.debugObject.YourHeartcolor2 = "#ecf4e0";
+
     this.texts = [
       {
         text: "DANCE",
@@ -55,13 +66,13 @@ export default class TextBuilding {
         text: "I want",
         font: "Milestone",
 
-        posX: 12,
-        posY: 13,
+        posX: 8,
+        posY: 15,
         posZ: 40,
         rotateY: -0.5,
-        scale: 6,
-        color1: "#F76E3B",
-        color2: "#C6C067",
+        scale: 7,
+        color1: this.debugObject.color1,
+        color2: this.debugObject.color2,
       },
       {
         text: "to feel you",
@@ -70,9 +81,9 @@ export default class TextBuilding {
         posY: 8.5,
         posZ: 40,
         rotateY: -0.5,
-        scale: 6,
-        color1: "#F76E3B",
-        color2: "#C6C067",
+        scale: 7,
+        color1: this.debugObject.color1,
+        color2: this.debugObject.color2,
       },
       {
         text: "come back",
@@ -83,8 +94,8 @@ export default class TextBuilding {
         posZ: 76,
         rotateY: 0.4,
         scale: 6,
-        color1: "#DEC2B0",
-        color2: "#DEC2B0",
+        color1: this.debugObject.ComeBackcolor1,
+        color2: this.debugObject.ComeBackcolor2,
       },
       {
         text: "to me",
@@ -95,8 +106,8 @@ export default class TextBuilding {
         posZ: 76,
         rotateY: 0.4,
         scale: 6,
-        color1: "#DEC2B0",
-        color2: "#DEC2B0",
+        color1: this.debugObject.ComeBackcolor1,
+        color2: this.debugObject.ComeBackcolor2,
       },
       {
         text: "YOUR HEART IS A GOLDMINE",
@@ -104,10 +115,10 @@ export default class TextBuilding {
         posX: -45,
         posY: 27,
         posZ: 175,
-        rotateY: 0.2,
+        rotateY: 0.1,
         scale: 4,
-        color1: "#FF0077",
-        color2: "#E3D9CB",
+        color1: this.debugObject.YourHeartcolor1,
+        color2: this.debugObject.YourHeartcolor2,
       },
       {
         text: "LARGER THAN ME",
@@ -115,10 +126,10 @@ export default class TextBuilding {
         posX: -45,
         posY: 23,
         posZ: 175,
-        rotateY: 0.2,
+        rotateY: 0.1,
         scale: 4,
-        color1: "#FF0077",
-        color2: "#E3D9CB",
+        color1: this.debugObject.YourHeartcolor1,
+        color2: this.debugObject.YourHeartcolor2,
       },
     ];
 
@@ -126,6 +137,36 @@ export default class TextBuilding {
       this.loader.load(`/fonts/${textOptions.font}.json`, (font) => {
         this.createText(font, textOptions);
       });
+    });
+
+    // I want to feel you
+    this.folderTextBuilding.addColor(this.debugObject, "color1").onChange(() => {
+      this.materialsText[3].uniforms.uColor1.value = new THREE.Color(this.debugObject.color1);
+      this.materialsText[4].uniforms.uColor1.value = new THREE.Color(this.debugObject.color1);
+    });
+    this.folderTextBuilding.addColor(this.debugObject, "color2").onChange(() => {
+      this.materialsText[3].uniforms.uColor2.value = new THREE.Color(this.debugObject.color2);
+      this.materialsText[4].uniforms.uColor2.value = new THREE.Color(this.debugObject.color2);
+    });
+
+    // Come back
+    this.folderTextBuilding.addColor(this.debugObject, "ComeBackcolor1").onChange(() => {
+      this.materialsText[5].uniforms.uColor1.value = new THREE.Color(this.debugObject.ComeBackcolor1);
+      this.materialsText[6].uniforms.uColor1.value = new THREE.Color(this.debugObject.ComeBackcolor1);
+    });
+    this.folderTextBuilding.addColor(this.debugObject, "ComeBackcolor2").onChange(() => {
+      this.materialsText[5].uniforms.uColor2.value = new THREE.Color(this.debugObject.ComeBackcolor2);
+      this.materialsText[6].uniforms.uColor2.value = new THREE.Color(this.debugObject.ComeBackcolor2);
+    });
+
+    // Your heart
+    this.folderTextBuilding.addColor(this.debugObject, "YourHeartcolor1").onChange(() => {
+      this.materialsText[7].uniforms.uColor1.value = new THREE.Color(this.debugObject.YourHeartcolor1);
+      this.materialsText[8].uniforms.uColor1.value = new THREE.Color(this.debugObject.YourHeartcolor1);
+    });
+    this.folderTextBuilding.addColor(this.debugObject, "YourHeartcolor2").onChange(() => {
+      this.materialsText[7].uniforms.uColor2.value = new THREE.Color(this.debugObject.YourHeartcolor2);
+      this.materialsText[8].uniforms.uColor2.value = new THREE.Color(this.debugObject.YourHeartcolor2);
     });
 
     this.structures = [

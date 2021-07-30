@@ -5,15 +5,40 @@ import vertex from "../shaders/garland/vertex.glsl";
 
 export default class Garland {
   constructor(options) {
+    this.gui = options.gui;
+    this.debugObject = {};
+    this.folderGarland = this.gui.addFolder("Garland");
+    this.folderGarland.open();
+
     this.scene = options.scene;
 
     this.lightsGarland = new THREE.Group();
     this.garlands = new THREE.Group();
+
+    this.materials = [];
   }
 
   init() {
     const nbGarlands = 3;
+    this.debugObject.colorLittle = "#fffbfd";
+    this.debugObject.colorBig1 = "#112e59";
+    this.debugObject.colorBig2 = "#feebeb";
 
+    this.folderGarland.addColor(this.debugObject, "colorLittle").onChange(() => {
+      this.materials.forEach((material) => {
+        material.uniforms.colorLittle.value = new THREE.Color(this.debugObject.colorLittle);
+      });
+    });
+    this.folderGarland.addColor(this.debugObject, "colorBig1").onChange(() => {
+      this.materials.forEach((material) => {
+        material.uniforms.colorBig1.value = new THREE.Color(this.debugObject.colorBig1);
+      });
+    });
+    this.folderGarland.addColor(this.debugObject, "colorBig2").onChange(() => {
+      this.materials.forEach((material) => {
+        material.uniforms.colorBig2.value = new THREE.Color(this.debugObject.colorBig2);
+      });
+    });
     for (let i = 0; i < nbGarlands; i++) {
       this.createGarland(i);
     }
@@ -55,9 +80,9 @@ export default class Garland {
     const material = new THREE.ShaderMaterial({
       uniforms: {
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-        colorLittle: { value: new THREE.Color("#F9EDC4") },
-        colorBig1: { value: new THREE.Color("#F8D18A") },
-        colorBig2: { value: new THREE.Color("#FDA29C") },
+        colorLittle: { value: new THREE.Color(this.debugObject.colorLittle) },
+        colorBig1: { value: new THREE.Color(this.debugObject.colorBig1) },
+        colorBig2: { value: new THREE.Color(this.debugObject.colorBig2) },
         opacity: { value: 1 },
       },
       vertexShader: vertex,
@@ -65,6 +90,8 @@ export default class Garland {
       transparent: true,
       depthWrite: false,
     });
+
+    this.materials.push(material);
 
     const garland = new THREE.Points(geometry, material);
 

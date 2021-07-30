@@ -1,8 +1,6 @@
 attribute float aRandom; 
 
 varying vec2 vUv; 
-varying float vOpacity; 
-
 uniform float uPixelRatio; 
 
 
@@ -21,6 +19,5 @@ void main() {
 
 
     vUv = uv; 
-    // vOpacity = aRandom;
 }
  

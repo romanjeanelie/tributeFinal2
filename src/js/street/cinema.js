@@ -3,6 +3,11 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 export default class Cinema {
   constructor(options) {
+    this.gui = options.gui;
+    this.debugObject = {};
+    this.folderCinema = this.gui.addFolder("Cinema");
+    this.folderCinema.open();
+
     this.scene = options.scene;
 
     this.loadingManager = options.loadingManager;
@@ -12,12 +17,13 @@ export default class Cinema {
   }
 
   init() {
-    this.materialText = new THREE.MeshBasicMaterial({
-      color: new THREE.Color("#FFE489"),
-      opacity: 0,
-      transparent: true,
+    this.debugObject.color = "#e7fbd2";
+
+    this.folderCinema.addColor(this.debugObject, "color").onChange(() => {
+      this.materialCosmos.color = new THREE.Color(this.debugObject.color);
     });
-    this.materialCosmos = new THREE.MeshBasicMaterial({ color: new THREE.Color("#FFE489") });
+
+    this.materialCosmos = new THREE.MeshBasicMaterial({ color: new THREE.Color(this.debugObject.color) });
 
     this.addCinema();
 
@@ -25,7 +31,7 @@ export default class Cinema {
 
     this.cinema.rotation.y = 0.5;
 
-    this.cinema.position.x = -42;
+    this.cinema.position.x = -32;
     this.cinema.position.y = 0;
     this.cinema.position.z = 240;
     this.scene.add(this.cinema);
@@ -37,8 +43,6 @@ export default class Cinema {
         if (child.type === "Mesh") {
           if (child.name.includes("Cosmos")) {
             child.material = this.materialCosmos;
-          } else if (child.name.includes("Text")) {
-            child.material = this.materialText;
           }
         }
       });

@@ -8,7 +8,7 @@ export default class Moon {
     this.gui = options.gui;
     this.debugObject = {};
     this.folderMoon = this.gui.addFolder("Moon");
-    this.folderMoon.open();
+    this.folderMoon.close();
 
     this.scene = options.scene;
     this.moon = new THREE.Group();

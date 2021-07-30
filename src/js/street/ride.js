@@ -8,6 +8,11 @@ import ridePositionsLights from "./ridePositionsLights.json";
 
 export default class Stadium {
   constructor(options) {
+    this.gui = options.gui;
+    this.debugObject = {};
+    this.folderRide = this.gui.addFolder("Ride");
+    this.folderRide.open();
+
     this.scene = options.scene;
 
     this.loadingManager = options.loadingManager;
@@ -32,13 +37,22 @@ export default class Stadium {
   }
 
   createLights(positionsLights) {
+    this.debugObject.color1 = "#ffebda";
+    this.debugObject.color2 = "#ffffff";
+    this.folderRide.addColor(this.debugObject, "color1").onChange(() => {
+      this.pointsMaterial.uniforms.color1.value = new THREE.Color(this.debugObject.color1);
+    });
+    this.folderRide.addColor(this.debugObject, "color2").onChange(() => {
+      this.pointsMaterial.uniforms.color2.value = new THREE.Color(this.debugObject.color2);
+    });
+
     const count = positionsLights.length;
     this.pointsMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
         uOpacity: { value: 1 },
-        color1: { value: new THREE.Color("#E77F68") },
-        color2: { value: new THREE.Color("#ffffff") },
+        color1: { value: new THREE.Color(this.debugObject.color1) },
+        color2: { value: new THREE.Color(this.debugObject.color2) },
       },
       vertexShader: vertex,
       fragmentShader: fragment,
@@ -58,7 +72,7 @@ export default class Stadium {
       positions[i3 + 1] = positionsLights[i].y;
       positions[i3 + 2] = positionsLights[i].z;
 
-      size[i] = 10000;
+      size[i] = 20000;
       opacity[i] = Math.min(0.4 + Math.random(), 0.8);
     }
 
