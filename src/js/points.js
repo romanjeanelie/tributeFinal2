@@ -50,8 +50,7 @@ export default class Points {
         isColor3: { value: 0 },
         isColor4: { value: 0 },
         isColor5: { value: 0 },
-        opacity: { value: 0 },
-        squeeze: { value: 0 },
+        uOpacity: { value: this.opacity },
       },
       vertexShader: vertex,
       fragmentShader: fragment,
@@ -94,5 +93,6 @@ export default class Points {
 
   anim(progress, time) {
     this.pointsMaterial.uniforms.time.value = time;
+    this.pointsMaterial.uniforms.uOpacity.value = this.opacity;
   }
 }

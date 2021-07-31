@@ -1,4 +1,3 @@
-varying vec2 vUv;
 varying float vOpacity;
 
 uniform float uPixelRatio;
@@ -17,6 +16,5 @@ void main(){
     // Keep size attenuation
     gl_PointSize *= (1.0 / - viewPosition.z);
 
-    vUv = uv; 
     vOpacity = opacity;
 }

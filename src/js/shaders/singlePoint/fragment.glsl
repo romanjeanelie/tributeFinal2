@@ -15,22 +15,14 @@ uniform float isColor5;
 uniform float opacity; 
 uniform float isPressed; 
 
-
 varying vec2 vUv;
 
-float fill(float x, float size){
-    return 1. - step(size, x);
-}
 
 void main()	{
     
     vec3 color = vec3(0.);
 
-    float circle = length(vUv - 0.5); 
-    circle = fill(circle, 0.02);
- 
     vec3 finalColor = mix(color1, vec3(1.), sin(time * .2));
-    float alpha = circle; 
 
     float growth = 1. - sin(time * 3.) * 0.1;
 
@@ -41,13 +33,10 @@ void main()	{
 
     float strength = (0.25 / distanceToCenter - 0.5) * strobeLight * opacity;
 
-  
 
     vec3 result = color1 * isColor1 + color2 * isColor2 + color3 * isColor3 + color4 * isColor4 + color5 * isColor5;
     result = mix(colorOrb, vec3(1.),  strength + 0.5);
    
-
-    //float finalColor = mix(1., 0.1, strength * 3.);
 
     gl_FragColor = vec4(result, strength * 3.);
 

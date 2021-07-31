@@ -1,4 +1,3 @@
-varying float vRandom;
 varying vec2 vUv; 
 
 uniform vec3 uColor1;

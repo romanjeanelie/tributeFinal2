@@ -52,7 +52,7 @@ export default class Animations {
     gsap.registerPlugin(SplitText);
 
     // DEBUG MODE /////////////////////////////////////////////////////////////////////////////////
-    this.backstage = false;
+    this.backstage = true;
     this.positionTimeline = 2;
     this.start = 0;
     // DEBUG MODE /////////////////////////////////////////////////////////////////////////////////
@@ -351,7 +351,6 @@ export default class Animations {
     });
 
     this.textGod.init();
-    this.textPoint.init();
     this.textFinal.init();
 
     this.singlePoint.init();
@@ -428,30 +427,12 @@ export default class Animations {
       value: 2.5,
     });
 
-    // SMALLER BG Point
-    this.tl3.to(
-      this.singlePoint.materialBG.uniforms.isPressed,
-      {
-        value: 2.5,
-      },
-      "<"
-    );
-
     // BIGGER Points
     this.tl3.to(this.singlePoint.material.uniforms.isPressed, {
       duration: 2,
       value: 1,
     });
 
-    // BIGGER BG Points
-    this.tl3.to(
-      this.singlePoint.materialBG.uniforms.isPressed,
-      {
-        duration: 2,
-        value: 1,
-      },
-      "<"
-    );
     if (index === 3) {
       this.stepFour();
     }
@@ -496,9 +477,9 @@ export default class Animations {
     );
 
     tl.to(
-      this.singlePoint.points.pointsMaterial.uniforms.opacity,
+      this.singlePoint.points,
       {
-        value: 1,
+        opacity: 1,
         duration: 4,
         ease: "expo.in",
       },
@@ -507,10 +488,6 @@ export default class Animations {
 
     const tlSky = gsap.timeline({ paused: true });
 
-    tlSky.to(this.sky, {
-      opacity: 1,
-      duration: 20,
-    });
     // PROGRESSION CAM
     this.tl4.to(
       this.createPath.cameraPath,
@@ -519,8 +496,7 @@ export default class Animations {
         duration: 20,
         ease: "linear",
         onUpdate: () => {
-          console.log(this.tl4.progress());
-          if (this.tl4.progress() > 0.234) {
+          if (this.tl4.progress() > 0.214) {
             tlSky.play();
           }
           if (this.tl4.progress() > 0.65) {
@@ -556,11 +532,40 @@ export default class Animations {
     );
 
     this.tl4.to(
+      this.sky,
+      {
+        opacity: 1,
+        delay: 3,
+        duration: 14,
+      },
+      "<"
+    );
+
+    this.tl4.to(
       this.sky.changeColor,
       {
-        delay: 5,
-        duration: 7,
+        delay: 3,
+        duration: 9,
         value: 1,
+      },
+      "<"
+    );
+
+    this.tl4.to(
+      this.singlePoint.points,
+      {
+        opacity: 0,
+        delay: 2.5,
+        duration: 7,
+      },
+      "<"
+    );
+    this.tl4.to(
+      this.singlePoint.textStars,
+      {
+        opacity: 0,
+        delay: 3,
+        duration: 7,
       },
       "<"
     );
@@ -576,13 +581,11 @@ export default class Animations {
     this.singlePoint.anim(progress, time);
     this.sky.anim(progress, time);
     this.plane.anim(progress, time);
-    this.flower.anim(progress, time);
     this.buttons.anim(progress, time);
   }
 
   animText(progress, time) {
     this.textGod.anim(progress * 12, time);
-    this.textPoint.anim(progress * 12, time);
     this.textFinal.anim(progress * 12, time);
 
     this.road.anim(progress * 12, time);
@@ -609,7 +612,7 @@ export default class Animations {
       this.progress = this.positionTimeline;
       document.body.classList.remove("scroll");
       document.querySelector(".home").style.opacity = 0;
-      this.singlePoint.points.pointsMaterial.uniforms.opacity.value = 1;
+      this.singlePoint.points.opacity = 0;
       this.tl2.play();
       this.singlePoint.mesh.position.y = this.createPath.cameraPath.splineCamera.position.y;
       this.sky.opacity = 1;

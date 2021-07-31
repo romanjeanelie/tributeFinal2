@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import gsap from "gsap";
 
 import fragment from "./shaders/textFinal/fragment.glsl";
 import vertex from "./shaders/textFinal/vertex.glsl";
@@ -62,7 +61,6 @@ export default class TextFinal {
 
       const textMaterial = new THREE.ShaderMaterial({
         uniforms: {
-          uStrength: { value: 0 },
           time: { value: 0 },
           opacity: { value: 0 },
           uColor1: { value: new THREE.Color("#F1E985") },

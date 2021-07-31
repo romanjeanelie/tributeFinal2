@@ -65,12 +65,9 @@ export default class Buttons {
   init() {
     this.createButton({ text: "PLAY", x: 0, y: 0, z: 0 });
 
-    // this.buttons.position.y = -1050;
-    // this.buttons.position.z = 18400;
     this.buttons.position.y = -1650;
     this.buttons.position.z = 16400;
 
-    // this.buttons.scale.set(3.5, 3.5, 3.5);
     this.buttons.scale.set(7, 7, 7);
 
     this.objectsToTest = this.buttonsMesh;
@@ -117,9 +114,6 @@ export default class Buttons {
 
       // Disable button
       this.btnPlay.disabled = true;
-
-      // Block camera
-      this.camera.playPressed = true;
 
       this.returnScene();
     });
@@ -170,7 +164,7 @@ export default class Buttons {
       this.sky.mesh.position,
       {
         y: -8000,
-        duration: 20,
+        duration: 30,
       },
       "<"
     );
@@ -484,6 +478,7 @@ export default class Buttons {
 
     this.audio.addEventListener("timeupdate", (event) => {
       const progress = this.audio.currentTime;
+      console.log(progress);
 
       if (progress > 204.5) {
         document.querySelector(".final").style.display = "flex";
@@ -531,7 +526,6 @@ export default class Buttons {
 
       this.textMaterial = new THREE.ShaderMaterial({
         uniforms: {
-          time: { value: 0 },
           opacity: { value: 1 },
           uColor1: { value: new THREE.Color(this.debugObject.color1) },
           uColor2: { value: new THREE.Color(this.debugObject.colorText) },
@@ -556,7 +550,6 @@ export default class Buttons {
       const geometryButton = new THREE.BoxBufferGeometry(8, 1, 2);
       this.materialButton = new THREE.ShaderMaterial({
         uniforms: {
-          time: { value: 0 },
           opacity: { value: 1 },
           uColor1: { value: new THREE.Color(this.debugObject.color1) },
           uColor2: { value: new THREE.Color(this.debugObject.color2) },
@@ -657,19 +650,13 @@ export default class Buttons {
   }
 
   anim(progress, time) {
-    if (this.materialButton) {
-      this.materialButton.uniforms.time.value = time;
-    }
     this.tl.seek(this.audio.currentTime);
     if (this.buttonsMesh.length > 0) {
       const screenPosition = this.buttonsMesh[0].position.clone();
       screenPosition.project(this.camera);
       const translateX = screenPosition.x * this.sizes.width * 1600;
       const translateY = screenPosition.y * this.sizes.height * 9;
-      this.btnPlay.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`;
-    }
-    if (this.debug) {
-      this.sky.opacity = 0;
+      this.btnPlay.style.transform = `translateX(${translateX - 10}px) translateY(${translateY}px)`;
     }
   }
 }

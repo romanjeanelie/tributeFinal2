@@ -39,12 +39,9 @@ export default class TextStars {
         scale: 30,
         color: "#192028",
         color2: "#C0D2E3",
-        // color: "#fff",
-        // color2: "#fff",
       },
       {
         text: "THEY KEEP RUNNING ON MY FEET",
-        // text: "they keep running on my feet",
         posX: -6,
         posY: -1500,
         posZ: -300,
@@ -54,7 +51,6 @@ export default class TextStars {
       },
       {
         text: "IT HELPED THE DAYS COMPLETE",
-        // text: "it helped the days complete",
         posX: -6,
         posY: -2600,
         posZ: -300,
@@ -64,7 +60,6 @@ export default class TextStars {
       },
       {
         text: "I'M LOCK IN YOUR DREAMS",
-        // text: "I'm lock in your dreams",
         posX: -6,
         posY: -4500,
         posZ: -600,
@@ -98,15 +93,10 @@ export default class TextStars {
 
       const textMaterial = new THREE.ShaderMaterial({
         uniforms: {
-          uStrength: { value: 0 },
           time: { value: 0 },
-          activeLines: { value: 0 },
-          progress: { value: 0 },
           opacity: { value: this.opacity },
           uColor: { value: new THREE.Color(options.color) },
           uColor2: { value: new THREE.Color(options.color2 ? options.color2 : options.color) },
-          squeeze: { value: 0 },
-          wide: { value: 1 },
         },
         vertexShader: vertex,
         fragmentShader: fragment,
@@ -142,20 +132,10 @@ export default class TextStars {
   anim(progress, time) {
     this.materialsText.forEach((material, i) => {
       material.uniforms.time.value = time;
-      material.uniforms.progress.value = progress;
-      // SPEED Volets
-      material.uniforms.activeLines.value = progress;
-      material.uniforms.activeLines.value = progress;
       material.uniforms.opacity.value = this.opacity;
     });
 
     this.textsMesh.forEach((mesh, i) => {
-      // mesh.position.x += i % 2 === 0 ? time * 0.003 * this.disperse : -(time * 0.003 * this.disperse);
-      // mesh.position.y += time * 0.02 * this.disperse;
-      // mesh.position.z += time * 0.07 * this.disperse;
-
-      // mesh.rotation.y += time * 0.00001 * this.disperse;
-      // mesh.rotation.x += time * 0.001 * this.disperse * i * 0.01;
       mesh.position.y += this.disperse * 0.1;
       mesh.position.x += i % 2 === 0 ? this.disperse * 0.05 : -this.disperse * 0.05;
       mesh.position.z += this.disperse * 0.1;

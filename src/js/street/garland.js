@@ -8,7 +8,7 @@ export default class Garland {
     this.gui = options.gui;
     this.debugObject = {};
     this.folderGarland = this.gui.addFolder("Garland");
-    this.folderGarland.open();
+    this.folderGarland.close();
 
     this.scene = options.scene;
 

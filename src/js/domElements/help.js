@@ -1,7 +1,5 @@
 import gsap from "gsap/gsap-core";
 
-import debounce from "../utils/debounce";
-
 import isTouchDevice from "../utils/isTouchDevice";
 
 export default class Help {

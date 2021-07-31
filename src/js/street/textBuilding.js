@@ -27,8 +27,11 @@ export default class TextBuilding {
     this.debugObject.color2 = "#bdf334";
     this.debugObject.ComeBackcolor1 = "#e382fc";
     this.debugObject.ComeBackcolor2 = "#eaeeb2";
-    this.debugObject.YourHeartcolor1 = "#4e51fa";
-    this.debugObject.YourHeartcolor2 = "#ff92ee";
+    // this.debugObject.YourHeartcolor1 = "#7500ff";
+    // this.debugObject.YourHeartcolor2 = "#ffccbc";
+    this.debugObject.YourHeartcolor1 = "#c50fff";
+    this.debugObject.YourHeartcolor2 = "#e7fffc";
+    // this.debugObject.YourHeartcolor2 = "#a0ffb7";
 
     this.texts = [
       {
@@ -261,8 +264,6 @@ export default class TextBuilding {
     const textMaterial = new THREE.ShaderMaterial({
       uniforms: {
         time: { value: 0 },
-        activeLines: { value: 0 },
-        progress: { value: 0 },
         opacity: { value: 1 },
         uColor1: { value: new THREE.Color(options.color1) },
         uColor2: { value: new THREE.Color(options.color2) },
@@ -314,18 +315,10 @@ export default class TextBuilding {
   anim(progress, time) {
     this.materialsText.forEach((material) => {
       material.uniforms.time.value = time;
-      material.uniforms.progress.value = progress;
-
-      material.uniforms.activeLines.value = progress;
       material.uniforms.opacity.value = this.opacity;
     });
 
     this.textsMesh.forEach((mesh, i) => {
-      // mesh.position.y += time * 0.0012 * this.disperse;
-      // mesh.position.x += i % 2 === 0 ? time * 0.0006 * this.disperse : -(time * 0.0006 * this.disperse);
-      // mesh.position.z += time * 0.001 * this.disperse;
-      // mesh.rotation.y += time * 0.00001 * this.disperse;
-      // mesh.rotation.x += time * 0.001 * this.disperse * i * 0.01;
       mesh.position.y += this.disperse * 0.1;
       mesh.position.x += i % 2 === 0 ? this.disperse * 0.02 : -this.disperse * 0.02;
       mesh.position.z += this.disperse * 0.06;

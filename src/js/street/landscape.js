@@ -7,6 +7,8 @@ export default class Landscape {
     this.gltfLoader = new GLTFLoader(this.loadingManager);
 
     this.scene = options.scene;
+
+    this.material = new THREE.MeshBasicMaterial({ color: 0x000000 });
   }
 
   init() {
@@ -15,13 +17,12 @@ export default class Landscape {
   }
 
   addLandscape2(options) {
-    const material = new THREE.MeshBasicMaterial({ color: 0x000000, opacity: 0.6, transparent: true });
-
     this.gltfLoader.load("/models/landscape2.glb", (gltf) => {
       gltf.scene.traverse((child) => {
-        // child.material = material;
+        if (child.type === "Mesh") {
+          child.material = this.material;
+        }
       });
-
       gltf.scene.rotation.y = Math.PI * 0.5;
       gltf.scene.scale.set(50, 50, 50);
       gltf.scene.position.x = options.x;
@@ -32,13 +33,12 @@ export default class Landscape {
     });
   }
   addLandscape3(options) {
-    this.material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-
     this.gltfLoader.load("/models/landscape3.glb", (gltf) => {
       gltf.scene.traverse((child) => {
-        //  child.material = this.material;
+        if (child.type === "Mesh") {
+          child.material = this.material;
+        }
       });
-
       gltf.scene.rotation.y = -Math.PI * 0.5;
       gltf.scene.scale.set(30, 30, 30);
       gltf.scene.position.x = options.x;

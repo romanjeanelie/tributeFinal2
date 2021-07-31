@@ -1,7 +1,6 @@
 uniform vec3 uColor1;
 uniform vec3 uColor2;
 
-
 uniform float opacity; 
 
 

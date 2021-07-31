@@ -32,8 +32,6 @@ export default class Sketch {
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.outputEncoding = THREE.sRGBEncoding;
 
-    // console.log(this.renderer.info);
-    // this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     this.renderer.render(this.scene, this.camera);
@@ -98,7 +96,6 @@ export default class Sketch {
 
   setClearColor() {
     this.debugObject.clearColor = "#000";
-    // this.debugObject.clearColor = "#ffffff";
     this.renderer.setClearColor(this.debugObject.clearColor);
     this.folderSketch
       .addColor(this.debugObject, "clearColor")

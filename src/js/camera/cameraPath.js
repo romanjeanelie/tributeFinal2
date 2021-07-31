@@ -11,11 +11,6 @@ export default class cameraPath {
     this.splineCamera = null;
     this.cameraHelper = null;
 
-    this.direction = new THREE.Vector3();
-    this.binormal = new THREE.Vector3();
-    this.normal = new THREE.Vector3();
-    this.position = new THREE.Vector3();
-
     this.tubeGeometry = null;
     this.mesh = null;
 
@@ -29,10 +24,8 @@ export default class cameraPath {
 
     this.progress = 0;
 
-    this.playPressed = false;
-
     // ACTIVE CAMERA /////////////////
-    this.isActive = false;
+    this.isActive = true;
     window.camera = this.camera;
     // ACTIVE CAMERA /////////////////
 
@@ -43,10 +36,10 @@ export default class cameraPath {
   positionCameraLarge() {
     if (this.isActive) {
       this.camera.position.x = -1000.4;
-      this.camera.position.y = -6584.3;
+      this.camera.position.y = -1584.3;
       this.camera.position.z = 506.94;
 
-      this.posCameraLarge = new THREE.Vector3(-5500, -4500, 0);
+      this.posCameraLarge = new THREE.Vector3(-1000, -1500, 0);
 
       this.params.animationView = false;
       document.body.classList.remove("scroll");
@@ -138,13 +131,10 @@ export default class cameraPath {
     this.pos = this.mesh.geometry.parameters.path.getPointAt(this.t);
     this.pos2 = this.mesh.geometry.parameters.path.getPointAt(this.t2);
 
-    // if (!this.playPressed) {
     this.cameraGroup.position.copy(this.pos2);
-    // }
 
     this.splineCamera.position.x = parallax.eased.x;
     this.splineCamera.position.y = parallax.eased.y;
-    // this.splineCamera.translateY(parallax.eased.y);
 
     this.cameraHelper.update();
   }

@@ -147,8 +147,6 @@ export default class Wheel {
       vertexShader: vertex3,
       fragmentShader: fragment3,
       transparent: true,
-      // depthWrite: false,
-      // depthTest: false,
     });
 
     const circle = new THREE.Points(geometry, material);
@@ -172,16 +170,7 @@ export default class Wheel {
     const nbBranches = 6;
     const ratioRotate = Math.PI / nbBranches;
 
-    this.branchGeometry = new THREE.PlaneGeometry(21, 0.1, nbPointsBranch, nbPointsBranch);
-
-    // Add random attribute
-    const random = new Float32Array(nbPointsBranch);
-
-    for (let i = 0; i < nbPointsBranch; i++) {
-      random[i] = Math.random();
-    }
-
-    this.branchGeometry.setAttribute("aRandom", new THREE.BufferAttribute(random, 1));
+    this.branchGeometry = new THREE.PlaneGeometry(19, 0.1, nbPointsBranch, nbPointsBranch);
 
     this.branchMaterial = new THREE.ShaderMaterial({
       uniforms: {
@@ -198,7 +187,6 @@ export default class Wheel {
 
       branch.position.x = 0;
       branch.rotation.z = (i + 1) * ratioRotate;
-      // branch.rotation.z = i;
 
       this.mainWheel.add(branch);
     }

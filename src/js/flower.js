@@ -60,16 +60,13 @@ export default class Flower {
       this.particlesMaterial = new THREE.ShaderMaterial({
         uniforms: {
           uTime: { value: 0 },
-          uScale: { value: 1 },
           uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
           color1: { value: new THREE.Color(this.debugObject.color1) },
           color2: { value: new THREE.Color(this.debugObject.color2) },
           uOpacity: { value: this.opacity },
           disperse: { value: 1 },
           changeColor: { value: 1 },
-          offset: { value: 200 },
           scaleSize: { value: 0.4 },
-          // scaleSize: { value: 1.5 },
         },
         vertexShader: vertex,
         fragmentShader: fragment,
@@ -84,7 +81,6 @@ export default class Flower {
       ------------------------------*/
       const sampler = new MeshSurfaceSampler(this.mesh).build();
       const numParticles = 2000;
-      // const numParticles = 200000;
 
       this.particlesGeometry = new THREE.BufferGeometry();
       const particlesPosition = new Float32Array(numParticles * 3);
@@ -111,10 +107,5 @@ export default class Flower {
 
       this.flower.add(this.particles);
     });
-  }
-
-  anim(progress, time) {
-    if (this.particlesMaterial === undefined) return;
-    // this.particlesMaterial.uniforms.uTime.value = time;
   }
 }

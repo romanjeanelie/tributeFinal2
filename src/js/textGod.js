@@ -28,7 +28,6 @@ export default class TextGod {
     this.textGroup = new THREE.Group();
 
     this.opacity = { value: 0 };
-    this.squeeze = { value: 1 };
     this.isLoaded = false;
 
     this.index = 0;
@@ -90,10 +89,7 @@ export default class TextGod {
       const textMaterial = new THREE.ShaderMaterial({
         uniforms: {
           time: { value: 0 },
-          activeLines: { value: 0 },
-          progress: { value: -13 },
           opacity: { value: this.opacity.value },
-          squeeze: { value: this.squeeze },
           uColor: { value: new THREE.Color(this.debugObject.color) },
           uColor2: { value: new THREE.Color(this.debugObject.color2) },
         },
@@ -120,11 +116,7 @@ export default class TextGod {
   anim(progress, time) {
     this.materialsText.forEach((material) => {
       material.uniforms.time.value = time;
-      // material.uniforms.progress.value = progress;
-
       material.uniforms.opacity.value = this.opacity.value;
-      material.uniforms.squeeze.value = this.squeeze.value;
-      material.uniforms.activeLines.value = progress;
     });
   }
 }

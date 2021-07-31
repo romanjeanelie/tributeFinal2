@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { gsap } from "gsap";
 
 import fragment from "./shaders/sky/fragment.glsl";
 import vertex from "./shaders/sky/vertex.glsl";

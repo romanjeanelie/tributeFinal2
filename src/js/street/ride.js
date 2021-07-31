@@ -64,7 +64,6 @@ export default class Stadium {
 
     const positions = new Float32Array(count * 3);
     const size = new Float32Array(count);
-    const opacity = new Float32Array(count);
 
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
@@ -73,12 +72,10 @@ export default class Stadium {
       positions[i3 + 2] = positionsLights[i].z;
 
       size[i] = 20000;
-      opacity[i] = Math.min(0.4 + Math.random(), 0.8);
     }
 
     pointsGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     pointsGeometry.setAttribute("size", new THREE.BufferAttribute(size, 1));
-    pointsGeometry.setAttribute("opacity", new THREE.BufferAttribute(opacity, 1));
 
     const points = new THREE.Points(pointsGeometry, this.pointsMaterial);
 

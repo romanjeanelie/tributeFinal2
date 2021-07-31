@@ -28,30 +28,24 @@ export default class Planet {
   addPlanet() {
     this.debugObject.planetColor1 = "#172b15";
     this.debugObject.planetColor2 = "#ffffff";
-    this.debugObject.planetColor3 = "#cc0f0f";
     this.folderPlanet.addColor(this.debugObject, "planetColor1").onChange(() => {
       this.planetMaterial.uniforms.color1.value = new THREE.Color(this.debugObject.planetColor1);
     });
     this.folderPlanet.addColor(this.debugObject, "planetColor2").onChange(() => {
       this.planetMaterial.uniforms.color2.value = new THREE.Color(this.debugObject.planetColor2);
     });
-    this.folderPlanet.addColor(this.debugObject, "planetColor3").onChange(() => {
-      this.planetMaterial.uniforms.color3.value = new THREE.Color(this.debugObject.planetColor3);
-    });
+
     this.geometry = new THREE.SphereGeometry(60, 70, 70);
     this.planetMaterial = new THREE.ShaderMaterial({
       uniforms: {
         color1: { value: new THREE.Color(this.debugObject.planetColor1) },
         color2: { value: new THREE.Color(this.debugObject.planetColor2) },
-        color3: { value: new THREE.Color(this.debugObject.planetColor3) },
         wide: { value: 15.5 },
         opacity: { value: 1 },
-
         changeColor: { value: 1 },
       },
       transparent: true,
       depthWrite: false,
-
       vertexShader: vertex,
       fragmentShader: fragment,
     });

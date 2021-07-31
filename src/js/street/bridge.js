@@ -10,6 +10,11 @@ import bridgeLightsRopes from "./bridgeLightsRopes.json";
 
 export default class Bridge {
   constructor(options) {
+    this.gui = options.gui;
+    this.debugObject = {};
+    this.folderBridge = this.gui.addFolder("Bridge");
+    this.folderBridge.open();
+
     this.scene = options.scene;
 
     this.loadingManager = options.loadingManager;
@@ -58,17 +63,22 @@ export default class Bridge {
   }
 
   createLightsRopes(positionsLight) {
+    this.debugObject.color = "#d0e0ff";
+
+    this.folderBridge.addColor(this.debugObject, "color").onChange(() => {
+      this.pointsMaterial.uniforms.uColor.value = new THREE.Color(this.debugObject.color);
+    });
+
     const count = positionsLight.length;
     this.pointsMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
         uOpacity: { value: 1 },
-        uColor: { value: new THREE.Color("#F4DECB") },
+        uColor: { value: new THREE.Color(this.debugObject.color) },
       },
       vertexShader: vertex,
       fragmentShader: fragment,
       transparent: true,
-      // depthWrite: false,
     });
 
     const pointsGeometry = new THREE.BufferGeometry();

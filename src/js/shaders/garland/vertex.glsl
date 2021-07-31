@@ -2,7 +2,6 @@ attribute float index;
 attribute float aRandom; 
 
 varying float vRandom; 
-varying vec2 vUv; 
 varying float vIndex;  
 
 
@@ -21,7 +20,6 @@ void main() {
     // Keep size attenuation
     gl_PointSize *= (1.0 / - viewPosition.z);
 
-    vUv = uv; 
     vIndex = index; 
     vRandom = aRandom;
 }

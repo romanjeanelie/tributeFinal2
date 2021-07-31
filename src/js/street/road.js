@@ -5,8 +5,7 @@ import vertex from "../shaders/buildings/windows/vertex";
 import fragment from "../shaders/buildings/windows/fragment";
 import vertexAntenne from "../shaders/buildings/antenne/vertexAntenne";
 import fragmentAntenne from "../shaders/buildings/antenne/fragmentAntenne";
-import vertex2 from "../shaders/buildings/panels/vertex2";
-import fragment2 from "../shaders/buildings/panels/fragment2";
+
 import positionsWindows from "./positionsWindows.json";
 
 import CityLights from "./cityLights";
@@ -37,17 +36,8 @@ export default class Road {
     this.buildingsGroup = new THREE.Group();
     this.buildingsTextsGroup = new THREE.Group();
     this.buildingsLightsGroup = new THREE.Group();
-    this.city = new THREE.Group();
-  }
 
-  downloadObjectAsJson(exportObj, exportName) {
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
-    var downloadAnchorNode = document.createElement("a");
-    downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", exportName + ".json");
-    document.body.appendChild(downloadAnchorNode); // required for firefox
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
+    this.city = new THREE.Group();
   }
 
   init() {
@@ -90,8 +80,7 @@ export default class Road {
     this.wheelGroup.scale.set(1.2, 1.2, 1.2);
     this.wheelGroup.position.x = -40;
     this.wheelGroup.position.z = 210;
-    // this.wheelGroup.position.x = -65;
-    // this.wheelGroup.position.z = 210;
+
     this.city.add(this.wheelGroup);
 
     this.buildingsGroup.position.x = 50;
@@ -155,7 +144,6 @@ export default class Road {
         }
         if (child.name.includes("Window")) {
           child.material = materialTransparent;
-          // this.positionsWindow.push(child.position);
         }
         if (child.name.includes("Panel")) {
           child.material = this.materialPanel;
@@ -167,7 +155,6 @@ export default class Road {
 
       this.buildingsGroup.add(gltf.scene);
 
-      // this.downloadObjectAsJson(this.positionsWindow);
       this.createLightWindow(positionsWindows);
     });
   }

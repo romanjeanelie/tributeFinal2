@@ -6,7 +6,6 @@ uniform float time;
 uniform float move; 
 
 varying float vOpacity;
-varying vec2 vUv;
 
 void main(){
     vec3 newPosition = position; 
@@ -24,7 +23,6 @@ void main(){
     // Keep size attenuation
     gl_PointSize *= (1.0 / - viewPosition.z);
 
-    vUv = uv; 
     vOpacity = opacity;
 
 }

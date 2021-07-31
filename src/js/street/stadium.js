@@ -43,31 +43,7 @@ export default class Stadium {
       side: THREE.DoubleSide,
       opacity: 1,
     });
-    const material2 = new THREE.MeshBasicMaterial({
-      color: 0x000000,
-      side: THREE.DoubleSide,
-      opacity: 1,
-    });
 
-    const textMaterial = new THREE.MeshBasicMaterial({
-      color: new THREE.Color("#FF9000"),
-      side: THREE.DoubleSide,
-      opacity: 1,
-    });
-
-    const materialLight = new THREE.ShaderMaterial({
-      uniforms: {
-        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-        color1: { value: new THREE.Color("#FFFEFF") },
-        color2: { value: new THREE.Color("#ffffff") },
-        opacity: { value: 1 },
-      },
-      vertexShader: vertex,
-      fragmentShader: fragment,
-      side: THREE.DoubleSide,
-      transparent: true,
-      // depthWrite: false,
-    });
     this.gltfLoader.load("/models/stadium.glb", (gltf) => {
       gltf.scene.traverse((child) => {
         if (child.type === "Mesh") {
@@ -87,7 +63,6 @@ export default class Stadium {
     this.pointsMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-        uOpacity: { value: 1 },
         color1: { value: new THREE.Color("#CEC98B") },
         color2: { value: new THREE.Color("#ffffff") },
       },
@@ -109,7 +84,7 @@ export default class Stadium {
       positions[i3 + 1] = positionsLight[i].y;
       positions[i3 + 2] = positionsLight[i].z;
 
-      size[i] = 45000;
+      size[i] = 25000;
       opacity[i] = Math.random();
     }
 
@@ -189,7 +164,7 @@ export default class Stadium {
       positions[i3 + 1] = positionsLight[i].y;
       positions[i3 + 2] = positionsLight[i].z;
 
-      size[i] = 100000;
+      size[i] = 60000;
       opacity[i] = 1;
     }
 
@@ -201,6 +176,4 @@ export default class Stadium {
 
     this.stadiumLights.add(points);
   }
-
-  anim(progress, time) {}
 }

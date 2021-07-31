@@ -22,11 +22,6 @@ export default class Moon {
     this.moon.position.z = -1000;
 
     this.moon.rotation.z = -0.5;
-
-    //
-    // this.moon.position.x = -5000;
-    // this.moon.position.y = 4000;
-    // this.moon.position.z = 10000;
   }
 
   addMoon() {
@@ -59,11 +54,10 @@ export default class Moon {
         changeColor: { value: 0 },
       },
       transparent: true,
-      // depthWrite: false,
-
       vertexShader: vertex,
       fragmentShader: fragment,
     });
+
     this.sphere = new THREE.Mesh(this.geometry, this.moonMaterial);
 
     this.moon.add(this.sphere);

@@ -1,6 +1,4 @@
 uniform float time;
-uniform float activeLines;
-uniform float progress;
 uniform float opacity;
 uniform vec3 uColor; 
 uniform vec3 uColor2; 
@@ -83,7 +81,6 @@ float cnoise(vec3 P){
 
 float stroke(float x, float s, float w){
   float d = smoothstep(s, s+0.3,x + w) - smoothstep(s-0.7,s, x-w);
-  // float d = step(s,x + w) - step(s, x-w);
   return d; 
  }
 
@@ -97,6 +94,4 @@ void main()	{
   vec3 finalColor = mix(uColor2, uColor, result);
 
   gl_FragColor = vec4(vec3(finalColor), (0.7 + result) * opacity);
-  // gl_FragColor = vec4(vec3(1.), 1.);
-    
 }

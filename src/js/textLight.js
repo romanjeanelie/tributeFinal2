@@ -2,8 +2,6 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler.js";
 import * as THREE from "three";
 
-import { gsap } from "gsap";
-
 import vertex from "./shaders/textLight/vertex.glsl";
 import fragment from "./shaders/textLight/fragment.glsl";
 
@@ -80,8 +78,6 @@ export default class TextLight {
 
     this.particlesMaterial = new THREE.ShaderMaterial({
       uniforms: {
-        uTime: { value: 0 },
-        uScale: { value: 1 },
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
         color1: { value: new THREE.Color("#E77F68") },
         color2: { value: new THREE.Color("#ffffff") },
@@ -109,6 +105,5 @@ export default class TextLight {
     if (this.particlesMaterial === undefined) return;
     this.particlesMaterial.uniforms.uOpacity.value = this.opacity;
     this.particlesMaterial.uniforms.disperse.value = this.disperse;
-    this.particlesMaterial.uniforms.uTime.value = time;
   }
 }

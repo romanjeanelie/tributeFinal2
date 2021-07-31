@@ -1,11 +1,8 @@
 uniform float uPixelRatio;
 
 attribute float size; 
-attribute float opacity; 
 
 varying vec2 vUv;
-varying vec3 vScale;
-varying float vOpacity;
 
 void main() {
     vec3 newposition = position;
@@ -21,5 +18,4 @@ void main() {
     gl_PointSize *= (1.0 / - viewPosition.z);
 
     vUv = uv; 
-    vOpacity = opacity;
 }

@@ -1,4 +1,3 @@
-varying vec2 vUv;
 varying float vIndex;  
 varying float vRandom; 
 
@@ -7,9 +6,6 @@ uniform vec3 colorBig1;
 uniform vec3 colorBig2;
 
 
-float fill(float x, float size){
-    return 1. - step(size, x);
-}
 void main(){
      vec3 color = vec3(0.);
 

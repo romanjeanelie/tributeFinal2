@@ -1,5 +1,3 @@
-uniform float time;
-uniform float wide;
 uniform vec3 uColor1;
 uniform vec3 uColor2;
 uniform vec3 uColor3;
@@ -7,8 +5,6 @@ uniform float changeColor;
 uniform float changeColor2;
 uniform float opacity;
 
-varying vec2 vUv;
-varying vec3 vNormal;
 
 
 void main()	{

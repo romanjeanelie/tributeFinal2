@@ -3,14 +3,12 @@ attribute float size;
 
 uniform float uPixelRatio;
 uniform float time;
-uniform float move; 
 
 varying float vOpacity;
 varying vec2 vUv;
 
 void main(){
     vec3 newPosition = position; 
-    newPosition.y += abs(time * sin(newPosition.x) * move);
     
     vec4 modelPosition = modelMatrix * vec4(newPosition, 1.); 
     vec4 viewPosition = viewMatrix * modelPosition; 

@@ -48,7 +48,6 @@ export default class Plane {
     this.createLights();
 
     this.plane.scale.set(40, 40, 40);
-    // this.plane.position.set(1200, -2100, 10600);
     this.plane.position.set(1200, -1500, 10600);
 
     this.scene.add(this.plane);
@@ -89,15 +88,10 @@ export default class Plane {
 
       this.textMaterial = new THREE.ShaderMaterial({
         uniforms: {
-          uStrength: { value: 0 },
           time: { value: 0 },
-          activeLines: { value: 0 },
-          progress: { value: 0 },
           opacity: { value: this.textOpacity },
           uColor: { value: new THREE.Color(this.debugObject.textColor1) },
           uColor2: { value: new THREE.Color(this.debugObject.textColor2) },
-          squeeze: { value: 0 },
-          wide: { value: 1 },
         },
         vertexShader: vertex,
         fragmentShader: fragment,
@@ -165,7 +159,6 @@ export default class Plane {
 
     const materialLittleLight = new THREE.ShaderMaterial({
       uniforms: {
-        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
         color1: { value: new THREE.Color("#ff0000") },
         color2: { value: new THREE.Color("#ffffff") },
         opacity: { value: 1 },

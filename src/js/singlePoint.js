@@ -6,8 +6,6 @@ import Points from "./points";
 
 import fragment from "./shaders/singlePoint/fragment.glsl";
 import vertex from "./shaders/singlePoint/vertex.glsl";
-import fragmentBG from "./shaders/singlePoint/fragmentBG.glsl";
-import vertexBG from "./shaders/singlePoint/vertexBG.glsl";
 
 import clamp from "./utils/clamp";
 
@@ -36,13 +34,11 @@ export default class SinglePoint {
     this.points.color2 = new THREE.Color(this.textStars.texts[0].color2);
     this.points.color3 = new THREE.Color(this.textStars.texts[1].color2);
     this.points.color4 = new THREE.Color(this.textStars.texts[2].color2);
-    // this.points.color5 = new THREE.Color(this.textStars.texts[3].color2);
     this.points.color5 = new THREE.Color("#fff");
     this.points.init();
 
     this.setColors();
     this.createPoint();
-    this.createBackground();
 
     this.updatePosition();
   }
@@ -83,34 +79,6 @@ export default class SinglePoint {
     this.mesh.scale.set(40, 40, 40);
 
     this.scene.add(this.mesh);
-  }
-
-  createBackground() {
-    this.geometryBG = new THREE.PlaneGeometry(1, 1);
-    this.materialBG = new THREE.ShaderMaterial({
-      uniforms: {
-        time: { value: 0 },
-        color1: { value: new THREE.Color(this.debugObject.color1) },
-        opacity: { value: 1 },
-        wide: { value: 0 },
-        isPressed: { value: 1 },
-      },
-      side: THREE.DoubleSide,
-      vertexShader: vertexBG,
-      fragmentShader: fragmentBG,
-      transparent: true,
-      depthWrite: false,
-    });
-
-    this.background = new THREE.Mesh(this.geometryBG, this.materialBG);
-
-    this.background.position.x = this.positionX;
-    this.background.position.y = this.positionY.value;
-    this.background.position.z = this.positionZ - 10;
-
-    this.background.scale.set(500, 500, 1);
-
-    // this.scene.add(this.background);
   }
 
   setColors() {
@@ -170,7 +138,6 @@ export default class SinglePoint {
   }
   anim(progress, time) {
     this.material.uniforms.time.value = time;
-    this.materialBG.uniforms.time.value = time;
 
     this.textStars.anim(progress * 12, time);
     this.mesh.position.y = this.positionY.value;

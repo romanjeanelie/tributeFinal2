@@ -69,7 +69,6 @@ export default class CityLights {
       uniforms: {
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
         time: { value: 0 },
-        move: { value: 0 },
         color1: { value: new THREE.Color("#E77F68") },
         color2: { value: new THREE.Color("#ffffff") },
         opacity: { value: 1 },
@@ -83,7 +82,6 @@ export default class CityLights {
       uniforms: {
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
         time: { value: 0 },
-        move: { value: 0 },
         color1: { value: new THREE.Color("#CAB9FE") },
         color2: { value: new THREE.Color("#ffffff") },
         opacity: { value: 1 },

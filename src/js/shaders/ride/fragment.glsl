@@ -2,7 +2,6 @@ uniform vec3 color1;
 uniform vec3 color2;
 uniform float uOpacity;
 
-varying float vOpacity; 
 varying vec2 vUv;
 
 

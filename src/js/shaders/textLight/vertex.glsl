@@ -6,8 +6,6 @@ varying vec2 vUv;
 varying vec3 vPosition; 
 varying float vOpacity;
 
-uniform float uTime; 
-uniform float uScale; 
 uniform float disperse;
 uniform float uPixelRatio;
 
