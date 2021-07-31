@@ -9,10 +9,11 @@ import Animations from "./animations";
 
 export default class Sketch {
   constructor(options) {
-    this.gui = new dat.GUI();
+    this.gui = new dat.GUI({
+      hideable: false,
+    });
     this.debugObject = {};
     this.gui.hide();
-    this.gui.hideable = true;
 
     // GUI
     this.folderSketch = this.gui.addFolder("Sketch");
