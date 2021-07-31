@@ -25,7 +25,7 @@ export default class cameraPath {
     this.progress = 0;
 
     // ACTIVE CAMERA /////////////////
-    this.isActive = true;
+    this.isActive = false;
     window.camera = this.camera;
     // ACTIVE CAMERA /////////////////
 
