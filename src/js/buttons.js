@@ -380,7 +380,7 @@ export default class Buttons {
       this.flower.particlesMaterial.uniforms.changeColor,
       {
         value: 0,
-        duration: 65,
+        duration: 45,
         ease: "power2.in",
       },
       "<"
