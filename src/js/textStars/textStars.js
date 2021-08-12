@@ -59,7 +59,7 @@ export default class TextStars {
         color2: "#FBD1C8",
       },
       {
-        text: "I'M LOCK IN YOUR DREAMS",
+        text: "I'M LOCKED IN YOUR DREAMS",
         posX: -6,
         posY: -4500,
         posZ: -600,
